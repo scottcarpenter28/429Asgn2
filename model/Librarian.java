@@ -7,6 +7,10 @@ import java.util.Properties;
 import java.util.Scanner;
 
 import javafx.stage.Stage;
+import userInterface.MainStageContainer;
+import userInterface.View;
+import userInterface.ViewFactory;
+import userInterface.WindowPosition;
 import javafx.scene.Scene;
 
 // project imports
@@ -21,7 +25,7 @@ import event.Event;
 
 /** The class containing the Teller  for the ATM application */
 //==============================================================
-public class Teller implements IView, IModel
+public class Librarian implements IView, IModel
 // This class implements all these interfaces (and does NOT extend 'EntityBase')
 // because it does NOT play the role of accessing the back-end database tables.
 // It only plays a front-end role. 'EntityBase' objects play both roles.
@@ -29,11 +33,17 @@ public class Teller implements IView, IModel
 	// For Impresario
 	private Properties dependencies;
 	private ModelRegistry myRegistry;
+	
+	// GUI Components
+		private Hashtable<String, Scene> myViews;
+		private Stage	  	myStage;
 
 	// constructor for this class
 	//----------------------------------------------------------
-	public Teller()
+	public Librarian()
 	{
+		myStage = MainStageContainer.getInstance();
+		myViews = new Hashtable<String, Scene>();
 
 		// STEP 3.1: Create the Registry object - if you inherit from
 		// EntityBase, this is done for you. Otherwise, you do it yourself
@@ -48,7 +58,22 @@ public class Teller implements IView, IModel
 		setDependencies();
 
 		// Set up the initial view
-		createAndShowTellerView();
+		createAndShowLibrarianView();
+	}
+
+	private void createAndShowLibrarianView() {
+		Scene currentScene = (Scene)myViews.get("TellerView");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("LibrarianView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("TellerView", currentScene);
+		}
+				
+		swapToView(currentScene);
+		
 	}
 
 	//-----------------------------------------------------------------------------------
@@ -76,7 +101,7 @@ public class Teller implements IView, IModel
 	//----------------------------------------------------------
 
 	//----------------------------------------------------------------
-	public void createAndShowTellerView()
+	public void stateChangeRequest()
 	{
 		// STEP 4: Write the sCR method component for the key you
 		// just set up dependencies for
@@ -226,6 +251,26 @@ public class Teller implements IView, IModel
 		
 	}
 
+	public void swapToView(Scene newScene)
+	{
+
+		
+		if (newScene == null)
+		{
+			System.out.println("Teller.swapToView(): Missing view for display");
+			new Event(Event.getLeafLevelClassName(this), "swapToView",
+				"Missing view for display ", Event.ERROR);
+			return;
+		}
+
+		myStage.setScene(newScene);
+		myStage.sizeToScene();
+		
+			
+		//Place in center
+		WindowPosition.placeCenter(myStage);
+
+	}
 
 
 	//-----------------------------------------------------------------------------

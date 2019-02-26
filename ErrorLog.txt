@@ -21,3 +21,7 @@
 [2/13/19 11:08 AM]|JDBCBroker|JDBCBroker|Error|NOTAG|null<Could not load driver class[com.mysql.jdbc.Driver]>
 [2/14/19 10:22 AM]|JDBCBroker|JDBCBroker|Error|NOTAG|null<Could not load driver class[com.mysql.jdbc.Driver]>
 [2/14/19 10:23 AM]|JDBCBroker|JDBCBroker|Error|NOTAG|null<Could not load driver class[com.mysql.jdbc.Driver]>
+[2/26/19 1:26 PM]|BLS|BLS.<init>|Error|NOTAG|null<Unable to create Librarian object>
+[2/26/19 1:28 PM]|BLS|BLS.<init>|Error|NOTAG|null<Unable to create Librarian object>
+[2/26/19 1:31 PM]|BLS|BLS.<init>|Error|NOTAG|null<Unable to create Librarian object>
+[2/26/19 1:32 PM]|BLS|BLS.<init>|Error|NOTAG|null<Unable to create Librarian object>
