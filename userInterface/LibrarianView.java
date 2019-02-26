@@ -65,23 +65,23 @@ public class LibrarianView extends View {
     	
     	//Insert new book
 
-    	insertNewBookBTN.setText("Insert a new book");
+    	insertNewBookBTN= new Button("Insert a new book");
     	grid.add(insertNewBookBTN,0,0);
     	
     	//Insert new patron
-    	insertNewPatronBTN.setText("Insert a new patron");
+    	insertNewPatronBTN=new Button("Insert a new patron");
     	grid.add(insertNewPatronBTN, 0, 1);
     	
     	//Search for book
-    	searchBooksBTN.setText("Search for a book");
+    	searchBooksBTN=new Button("Search for a book");
     	grid.add(searchBooksBTN, 1, 0);
     	
     	//Search for patron
-    	searchPatronBTN.setText("Search for a patron");
+    	searchPatronBTN=new Button("Search for a patron");
     	grid.add(searchPatronBTN, 1, 1);
     	
     	//Done
-    	doneBTN.setText("Done");
+    	doneBTN=new Button("Done");
     	grid.add(doneBTN, 2, 0);
     	
 		return grid;
