@@ -1,10 +1,20 @@
 package userInterface;
 
+import java.text.NumberFormat;
+import java.util.Properties;
+
 import impresario.IModel;
+import javafx.event.Event;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -13,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 public class LibrarianView extends View {
 	private Button insertNewBookBTN;
@@ -66,27 +77,70 @@ public class LibrarianView extends View {
     	//Insert new book
 
     	insertNewBookBTN= new Button("Insert a new book");
+    	insertNewBookBTN.setOnAction(new EventHandler<ActionEvent>() {
+
+  		     @Override
+  		     public void handle(ActionEvent e) {
+  		     	processAction(e);    
+       	     }
+   	});
     	grid.add(insertNewBookBTN,0,0);
     	
     	//Insert new patron
     	insertNewPatronBTN=new Button("Insert a new patron");
+    	insertNewPatronBTN.setOnAction(new EventHandler<ActionEvent>() {
+
+  		     @Override
+  		     public void handle(ActionEvent e) {
+  		     	processAction(e);    
+       	     }
+   	});
     	grid.add(insertNewPatronBTN, 0, 1);
     	
     	//Search for book
     	searchBooksBTN=new Button("Search for a book");
+    	searchBooksBTN.setOnAction(new EventHandler<ActionEvent>() {
+
+  		     @Override
+  		     public void handle(ActionEvent e) {
+  		     	processAction(e);    
+       	     }
+   	});
     	grid.add(searchBooksBTN, 1, 0);
     	
     	//Search for patron
     	searchPatronBTN=new Button("Search for a patron");
+    	searchPatronBTN.setOnAction(new EventHandler<ActionEvent>() {
+
+  		     @Override
+  		     public void handle(ActionEvent e) {
+  		     	processAction(e);    
+       	     }
+   	});
     	grid.add(searchPatronBTN, 1, 1);
     	
     	//Done
     	doneBTN=new Button("Done");
-    	grid.add(doneBTN, 2, 0);
+    	doneBTN.setOnAction(new EventHandler<ActionEvent>() {
+
+  		     @Override
+  		     public void handle(ActionEvent e) {
+  		     	processAction(e);    
+       	     }
+   	});
+    	grid.add(doneBTN, 1, 3);
     	
 		return grid;
 	}
 
+	public void processAction(Event e) {
+		if("javafx.event.ActionEvent[source=Button@4661f84f[styleClass=button]'Done']"==e.toString()) {
+			System.exit(0);
+		}
+		else
+			System.out.println(e.toString());
+	}
+	
 	@Override
 	public void updateState(String key, Object value) {
 		// TODO Auto-generated method stub
