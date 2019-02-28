@@ -83,9 +83,9 @@ public class PatronCollectionView extends View
 		ObservableList<PatronTableModel> tableData = FXCollections.observableArrayList();
 		try
 		{
-			PatronZipCollection PatronZipCollection = (PatronZipCollection)myModel.getState("AccountList");
+			PatronZipCollection PatronZipCollection = (PatronZipCollection)myModel.getState("PatronList");
 
-	 		Vector entryList = (Vector)PatronZipCollection.getState("Accounts");
+	 		Vector entryList = (Vector)PatronZipCollection.getState("Patrons");
 			Enumeration entries = entryList.elements();
 
 			while (entries.hasMoreElements() == true)
@@ -210,30 +210,17 @@ public class PatronCollectionView extends View
  		submitButton.setOnAction(new EventHandler<ActionEvent>() {
 
        		     @Override
-       		     public void handle(ActionEvent e) {
-       		     	clearErrorMessage(); 
-					// do the inquiry
-					processAccountSelected();
-					
-            	 }
+       		  public void handle(ActionEvent e) {
+       		     	processAction(e);    
+            	     }
         	});
 
 		cancelButton = new Button("Back");
  		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 
-       		     @Override
-       		     public void handle(ActionEvent e) {
-					/**
-					 * Process the Cancel button.
-					 * The ultimate result of this action is that the transaction will tell the teller to
-					 * to switch to the transaction choice view. BUT THAT IS NOT THIS VIEW'S CONCERN.
-					 * It simply tells its model (controller) that the transaction was canceled, and leaves it
-					 * to the model to decide to tell the teller to do the switch back.
-			 		*/
-					//----------------------------------------------------------
-       		     	clearErrorMessage();
-       		     	myModel.stateChangeRequest("CancelAccountList", null); 
-            	  }
+ 			  public void handle(ActionEvent e) {
+ 	  		     	processAction(e);    
+ 	       	     }
         	});
 
 		HBox btnContainer = new HBox(100);
@@ -249,6 +236,11 @@ public class PatronCollectionView extends View
 	}
 
 	
+
+	protected void processAction(ActionEvent e) {
+		// TODO Auto-generated method stub
+		myModel.stateChangeRequest("LibrarianView", null);
+	}
 
 	//--------------------------------------------------------------------------
 	public void updateState(String key, Object value)

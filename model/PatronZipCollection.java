@@ -12,122 +12,121 @@ import event.Event;
 import database.*;
 
 import impresario.IView;
+import userInterface.PatronCollectionView;
 
 //==============================================================
 public class PatronZipCollection  extends EntityBase implements IView
 {
 	private static final String myTableName = "patron";
 
+	protected Properties dependencies;
 	private Vector patrons;
 	// GUI Components
 
 	// constructor for this class
 	//----------------------------------------------------------
 	public PatronZipCollection( String zip) throws
-		Exception
+	Exception
 	{
 		super(myTableName);
 
-		if (zip == null)
-		{
-			new Event(Event.getLeafLevelClassName(this), "<init>",
-				"Missing account holder information", Event.FATAL);
-			throw new Exception
-				("UNEXPECTED ERROR: PatronAgeCollection.<init>: account holder information is null");
-		}
+		setDependencies();
+		String query = "SELECT * FROM " + myTableName + " WHERE (AccountNumber = " + zip + ")";
 
-		String query = "SELECT * FROM patron WHERE patron.zip='"+zip+"'";
+		Vector<Properties> allDataRetrieved = getSelectQueryResult(query);
 
-		Vector allDataRetrieved = getSelectQueryResult(query);
-		
-		String result="";
+		// You must get one account at least
 		if (allDataRetrieved != null)
 		{
-			patrons = new Vector();
+			int size = allDataRetrieved.size();
 
-			result = ("==============================================\n");
+			// There should be EXACTLY one account. More than that is an error
+			if (size == 0)
+			{
+				throw new InvalidPrimaryKeyException("No patrons matching zip : "
+					+ zip + " found.");
+			}
+			else
+			{
+				// copy all the retrieved data into persistent state
+				Properties retrievedAccountData = allDataRetrieved.elementAt(0);
+				persistentState = new Properties();
 
-			Properties p1 = (Properties) allDataRetrieved.firstElement();
+				Enumeration allKeys = retrievedAccountData.propertyNames();
+				while (allKeys.hasMoreElements() == true)
+				{
+					String nextKey = (String)allKeys.nextElement();
+					String nextValue = retrievedAccountData.getProperty(nextKey);
+					// accountNumber = Integer.parseInt(retrievedAccountData.getProperty("accountNumber"));
 
-			Enumeration props1 = p1.propertyNames();
-
-			while (props1.hasMoreElements())
-
-				result += (props1.nextElement() + "\t");
-
-			result += "\n";
-
-			result += ("----------------------------------------------\n");
-			Vector<Properties> data= allDataRetrieved;
-			for (Properties p : data) {
-
-				Enumeration props = p.propertyNames();
-
-				while (props.hasMoreElements())
-
-					result += (p.getProperty((String) (props.nextElement())) + "\t");
-
-				result += "\n";
+					if (nextValue != null)
+					{
+						persistentState.setProperty(nextKey, nextValue);
+					}
+				}
 
 			}
-
-			result += ("==============================================");
-
 		}
-		else
-			System.out.println("No books found for "+zip);
-		System.out.println(result);
 	}
 
-	/**
-	 *
-	 */
-	//----------------------------------------------------------
-	public Object getState(String key)
-	{
-		if (key.equals("Title"))
-			return patrons;
-		return null;
+
+		private void setDependencies() {
+			dependencies = new Properties();
+			
+			myRegistry.setDependencies(dependencies);
+		
 	}
 
-	//----------------------------------------------------------------
-	public void stateChangeRequest(String key, Object value)
-	{
-		// Class is invariant, so this method does not change any attributes
-
-		myRegistry.updateSubscribers(key, this);
-	}
-
-	/** Called via the IView relationship */
-	//----------------------------------------------------------
-	public void updateState(String key, Object value)
-	{
-		stateChangeRequest(key, value);
-	}
-
-	//-----------------------------------------------------------------------------------
-	protected void initializeSchema(String tableName)
-	{
-		if (mySchema == null)
+		/**
+		 *
+		 */
+		//----------------------------------------------------------
+		public Object getState(String key)
 		{
-			mySchema = getSchemaInfo(tableName);
+			System.out.println("Geting state");
+			if (key.equals("Patrons"))
+				return patrons;
+			return null;
+		}
+
+		//----------------------------------------------------------------
+		public void stateChangeRequest(String key, Object value)
+		{
+			// Class is invariant, so this method does not change any attributes
+
+			myRegistry.updateSubscribers(key, this);
+		}
+
+		/** Called via the IView relationship */
+		//----------------------------------------------------------
+		public void updateState(String key, Object value)
+		{
+			stateChangeRequest(key, value);
+		}
+
+		//-----------------------------------------------------------------------------------
+		protected void initializeSchema(String tableName)
+		{
+			if (mySchema == null)
+			{
+				mySchema = getSchemaInfo(tableName);
+			}
+		}
+
+		public Vector<String> getEntryListView()
+		{
+			Vector<String> v = new Vector<String>();
+
+			v.addElement(persistentState.getProperty("PatronId"));
+			v.addElement(persistentState.getProperty("name"));
+			v.addElement(persistentState.getProperty("address"));
+			v.addElement(persistentState.getProperty("city"));
+			v.addElement(persistentState.getProperty("stateCode"));
+			v.addElement(persistentState.getProperty("zip"));
+			v.addElement(persistentState.getProperty("email"));
+			v.addElement(persistentState.getProperty("dateOfBirth"));
+			v.addElement(persistentState.getProperty("status"));
+
+			return v;
 		}
 	}
-
-	public Vector<String> getEntryListView()
-	{
-		Vector<String> v = new Vector<String>();
-
-		v.addElement(persistentState.getProperty("PatronId"));
-		v.addElement(persistentState.getProperty("name"));
-		v.addElement(persistentState.getProperty("address"));
-		v.addElement(persistentState.getProperty("city"));
-		v.addElement(persistentState.getProperty("stateCode"));
-		v.addElement(persistentState.getProperty("zip"));
-		v.addElement(persistentState.getProperty("email"));
-		v.addElement(persistentState.getProperty("dateOfBirth"));
-		v.addElement(persistentState.getProperty("status"));
-
-		return v;
-	}
-}

@@ -49,6 +49,7 @@ public class SearchPatron extends View {
 
 		// STEP 0: Be sure you tell your model what keys you are interested in
 		myModel.subscribe("LoginError", this);
+		populateFields();
 	}
 
 	private Node createTitle() {		
@@ -121,6 +122,7 @@ public class SearchPatron extends View {
 	}
 
 	private void proccessZip(String zipCode) {
+		
 		Properties props=new Properties();
 		props.setProperty("zip", zipCode);
 		myModel.stateChangeRequest("zip", props);

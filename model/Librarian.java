@@ -100,6 +100,7 @@ public class Librarian implements IView, IModel
 	}
 
 
+
 	/** Called via the IView relationship */
 	//----------------------------------------------------------
 	public void updateState(String key, Object value)
@@ -193,7 +194,7 @@ public class Librarian implements IView, IModel
 		if (currentScene == null)
 		{
 			// create our initial view
-			View newView = ViewFactory.createView("patronCollecction", this); // USE VIEW FACTORY
+			View newView = ViewFactory.createView("patronCollection", this); // USE VIEW FACTORY
 			currentScene = new Scene(newView);
 			myViews.put("patronCollection", currentScene);
 		}
