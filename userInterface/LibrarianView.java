@@ -134,11 +134,14 @@ public class LibrarianView extends View {
 	}
 
 	public void processAction(Event e) {
-		if("javafx.event.ActionEvent[source=Button@4661f84f[styleClass=button]'Done']"==e.toString()) {
+		if(e.getSource()==doneBTN) {
 			System.exit(0);
 		}
+		else if(e.getSource()==searchPatronBTN) {
+			myModel.stateChangeRequest("searchPatron", null);
+		}
 		else
-			System.out.println(e.toString());
+			System.out.println(e);
 	}
 	
 	@Override

@@ -23,7 +23,7 @@ import exception.InvalidPrimaryKeyException;
 import exception.PasswordMismatchException;
 import event.Event;
 
-/** The class containing the Teller  for the ATM application */
+/** The class containing the Teller  for the Librarian application */
 //==============================================================
 public class Librarian implements IView, IModel
 // This class implements all these interfaces (and does NOT extend 'EntityBase')
@@ -47,10 +47,10 @@ public class Librarian implements IView, IModel
 
 		// STEP 3.1: Create the Registry object - if you inherit from
 		// EntityBase, this is done for you. Otherwise, you do it yourself
-		myRegistry = new ModelRegistry("Teller");
+		myRegistry = new ModelRegistry("Librarian");
 		if(myRegistry == null)
 		{
-			new Event(Event.getLeafLevelClassName(this), "Teller",
+			new Event(Event.getLeafLevelClassName(this), "Librarian",
 				"Could not instantiate Registry", Event.ERROR);
 		}
 
@@ -61,20 +61,6 @@ public class Librarian implements IView, IModel
 		createAndShowLibrarianView();
 	}
 
-	private void createAndShowLibrarianView() {
-		Scene currentScene = (Scene)myViews.get("TellerView");
-
-		if (currentScene == null)
-		{
-			// create our initial view
-			View newView = ViewFactory.createView("LibrarianView", this); // USE VIEW FACTORY
-			currentScene = new Scene(newView);
-			myViews.put("TellerView", currentScene);
-		}
-				
-		swapToView(currentScene);
-		
-	}
 
 	//-----------------------------------------------------------------------------------
 	private void setDependencies()
@@ -91,7 +77,7 @@ public class Librarian implements IView, IModel
 	}
 
 	/**
-	 * Method called from client to get the value of a particular field
+	 * Method called from client to get the value of a particular fieldf
 	 * held by the objects encapsulated by this object.
 	 *
 	 * @param	key	Name of database column (field) for which the client wants the value
@@ -101,114 +87,18 @@ public class Librarian implements IView, IModel
 	//----------------------------------------------------------
 
 	//----------------------------------------------------------------
-	public void stateChangeRequest()
+	public void stateChangeRequest(String key, Object value)
 	{
-		// STEP 4: Write the sCR method component for the key you
-		// just set up dependencies for
-		// DEBUG System.out.println("Teller.sCR: key = " + key);
-		int selection;
-		do {
-		System.out.println("Enter the number of the task or any other number to exit:"
-				+ "\n1. Enter new book"
-				+ "\n2. Insert new patron"
-				+ "\n3. Search for books with title"
-				+ "\n4. Print all released in a year or prior"
-				+ "\n5. Display all patron younger then a given date"
-				+ "\n6. Display all patrons in a zip code");
-		Scanner sc= new Scanner(System.in);
-		selection= Integer.parseInt(sc.nextLine());
-		if(selection==1) {
-			Properties props = new Properties();
-			System.out.println("Enter author: ");
-			String author=sc.nextLine();
-			props.put("author", author);
-			System.out.println("Enter title: ");
-			String title=sc.nextLine();
-			props.put("title", title);
-			System.out.println("Enter Publication Year: ");
-			String pubYear=sc.nextLine();
-			props.put("pubYear", pubYear);
-			System.out.println("Enter status: ");
-			String status=sc.nextLine();
-			props.put("status", status);
-			Properties schema = new Properties();
-			schema.put("TableName", "books");
-			try {
-				new InsertNewBook(props);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			}
-		else if(selection==2) {
-			Properties props = new Properties();
-			System.out.println("Enter Name:");
-			String name=sc.nextLine();
-			props.put("name",name);
-			System.out.println("Enter Address:");
-			String address=sc.nextLine();
-			props.put("address",address);
-			System.out.println("Enter City:");
-			String city=sc.nextLine();
-			props.put("city",city);
-			System.out.println("Enter 2 letter state code :");
-			String stateCode=sc.nextLine();
-			props.put("stateCode",stateCode);
-			System.out.println("Enter ZIP: ");
-			String zip=sc.nextLine();
-			props.put("zip",zip);
-			System.out.println("Enter email: ");
-			String email=sc.nextLine();
-			props.put("email",email);
-			System.out.println("Enter date of birth (YYYY-MM-DD: ");
-			String dateOfBirth=sc.nextLine();
-			props.put("dateOfBirth",dateOfBirth);
-			String status="Active";
-			props.put("status",status);
-			try {
-				new InsertPatron(props);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		else if(selection==3) {
-			System.out.println("Please enter part of book title: ");
-			String title=sc.next();
-			try {
-				new BookCatalog(title);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		else if(selection==4) {
-			System.out.println("Please enter book release year: ");
-			String year=sc.next();
-			try {
-				new BookReleaseYear(year);
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-		else if(selection==5) {
-			System.out.println("Enter a date (YYYY-MM-DD):");
-			String date = sc.nextLine();
-			try {
-				new PatronYounger(date);
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-		else if(selection==6) {
-			System.out.println("Please enter a zip code");
-			String zip=sc.next();
-			try {
-				new PatronZipCollection(zip);
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-			}while(selection!=0 || selection>6);
+		if(key=="searchPatron") 
+			createAndShowPatronSearch();
+		else if(key=="LibrarianView")
+			createAndShowLibrarianView();
+		else if(key=="zip")
+			createAndShowPatronCollection();
+		else
+			System.out.println("No screen for key.");
 	}
+
 
 	/** Called via the IView relationship */
 	//----------------------------------------------------------
@@ -245,19 +135,11 @@ public class Librarian implements IView, IModel
 		return null;
 	}
 
-	@Override
-	public void stateChangeRequest(String key, Object value) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void swapToView(Scene newScene)
-	{
-
-		
+	{		
 		if (newScene == null)
 		{
-			System.out.println("Teller.swapToView(): Missing view for display");
+			System.out.println("Librarian.swapToView(): Missing view for display");
 			new Event(Event.getLeafLevelClassName(this), "swapToView",
 				"Missing view for display ", Event.ERROR);
 			return;
@@ -272,7 +154,56 @@ public class Librarian implements IView, IModel
 
 	}
 
+//---------			Create and show methods			-----------------------------------------------------------------------------------------------//
+	private void createAndShowLibrarianView() {
+		Scene currentScene = (Scene)myViews.get("LibrarianView");
 
-	//-----------------------------------------------------------------------------
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("LibrarianView", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("TellerView", currentScene);
+		}
+				
+		swapToView(currentScene);
+		
+	}
+	
+	private void createAndShowPatronSearch() {
+		Scene currentScene = (Scene)myViews.get("searchPatron");
+		
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("searchPatron", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("searchPatron", currentScene);
+		}
+				
+
+		// make the view visible by installing it into the frame
+		swapToView(currentScene);
+		
+	}
+	
+	private void createAndShowPatronCollection() {
+		Scene currentScene = (Scene)myViews.get("patronCollection");
+		
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("patronCollecction", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("patronCollection", currentScene);
+		}
+				
+
+		// make the view visible by installing it into the frame
+		swapToView(currentScene);
+		
+	}
+	
+//-----------------------------------------------------------------------------
 
 }

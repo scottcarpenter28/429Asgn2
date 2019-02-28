@@ -113,4 +113,21 @@ public class PatronZipCollection  extends EntityBase implements IView
 			mySchema = getSchemaInfo(tableName);
 		}
 	}
+
+	public Vector<String> getEntryListView()
+	{
+		Vector<String> v = new Vector<String>();
+
+		v.addElement(persistentState.getProperty("PatronId"));
+		v.addElement(persistentState.getProperty("name"));
+		v.addElement(persistentState.getProperty("address"));
+		v.addElement(persistentState.getProperty("city"));
+		v.addElement(persistentState.getProperty("stateCode"));
+		v.addElement(persistentState.getProperty("zip"));
+		v.addElement(persistentState.getProperty("email"));
+		v.addElement(persistentState.getProperty("dateOfBirth"));
+		v.addElement(persistentState.getProperty("status"));
+
+		return v;
+	}
 }
