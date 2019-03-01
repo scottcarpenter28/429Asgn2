@@ -37,12 +37,12 @@ import java.util.Enumeration;
 
 // project imports
 import impresario.IModel;
-import model.PatronZipCollection;
+import model.BookCatalog;
 
 //==============================================================================
-public class PatronCollectionView extends View
+public class BookCollectionView extends View
 {
-	protected TableView<PatronTableModel> tableOfAccounts;
+	protected TableView<BookTableModel> tableOfAccounts;
 	protected Button cancelButton;
 	protected Button submitButton;
 
@@ -50,9 +50,9 @@ public class PatronCollectionView extends View
 
 
 	//--------------------------------------------------------------------------
-	public PatronCollectionView(IModel wsc)
+	public BookCollectionView(IModel wsc)
 	{
-		super(wsc, "PatronZipCollectionView");
+		super(wsc, "bookCollectionView");
 
 		// create a container for showing the contents
 		VBox container = new VBox(10);
@@ -80,21 +80,21 @@ public class PatronCollectionView extends View
 	protected void getEntryTableModelValues()
 	{
 		
-		ObservableList<PatronTableModel> tableData = FXCollections.observableArrayList();
+		ObservableList<BookTableModel> tableData = FXCollections.observableArrayList();
 		try
 		{
-			PatronZipCollection PatronZipCollection = (PatronZipCollection)myModel.getState("PatronList");
+			BookCatalog PatronZipCollection = (BookCatalog)myModel.getState("BookList");
 
-	 		Vector entryList = (Vector)PatronZipCollection.getState("Patrons");
+	 		Vector entryList = (Vector)PatronZipCollection.getState("Books");
 			Enumeration entries = entryList.elements();
 
 			while (entries.hasMoreElements() == true)
 			{
-				PatronZipCollection nextAccount = (PatronZipCollection)entries.nextElement();
+				BookCatalog nextAccount = (BookCatalog)entries.nextElement();
 				Vector<String> view = nextAccount.getEntryListView();
 
 				// add this list entry to the list
-				PatronTableModel nextTableRowData = new PatronTableModel(view);
+				BookTableModel nextTableRowData = new BookTableModel(view);
 				tableData.add(nextTableRowData);
 				
 			}
@@ -135,63 +135,43 @@ public class PatronCollectionView extends View
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        Text prompt = new Text("LIST OF Patrons");
+        Text prompt = new Text("LIST OF BOOKS");
         prompt.setWrappingWidth(350);
         prompt.setTextAlignment(TextAlignment.CENTER);
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
 
-		tableOfAccounts = new TableView<PatronTableModel>();
+		tableOfAccounts = new TableView<BookTableModel>();
 		tableOfAccounts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	
-		TableColumn patronIdColumn = new TableColumn("PatronId") ;
-		patronIdColumn.setMinWidth(100);
-		patronIdColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("patronId"));
+		TableColumn bookIdColumn = new TableColumn("bookId") ;
+		bookIdColumn.setMinWidth(100);
+		bookIdColumn.setCellValueFactory(
+	                new PropertyValueFactory<PatronTableModel, String>("bookId"));
 		
-		TableColumn nameColumn = new TableColumn("name") ;
-		nameColumn.setMinWidth(100);
-		nameColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("name"));
+		TableColumn authorColumn = new TableColumn("author") ;
+		authorColumn.setMinWidth(100);
+		authorColumn.setCellValueFactory(
+	                new PropertyValueFactory<PatronTableModel, String>("author"));
 		  
-		TableColumn addressColumn = new TableColumn("address") ;
-		addressColumn.setMinWidth(100);
-		addressColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("address"));
+		TableColumn titleColumn = new TableColumn("title") ;
+		titleColumn.setMinWidth(100);
+		titleColumn.setCellValueFactory(
+	                new PropertyValueFactory<PatronTableModel, String>("title"));
 		
-		TableColumn cityColumn = new TableColumn("city") ;
-		cityColumn.setMinWidth(100);
-		cityColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("city"));
-		
-		TableColumn stateCodeColumn = new TableColumn("stateCode") ;
-		stateCodeColumn.setMinWidth(100);
-		stateCodeColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("stateCode"));
-		
-		
-		TableColumn zipColumn = new TableColumn("zip") ;
-		zipColumn.setMinWidth(100);
-		zipColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("zip"));
-		
-		TableColumn emailColumn = new TableColumn("email") ;
-		emailColumn.setMinWidth(100);
-		emailColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("email"));
-		
-		TableColumn dobColumn = new TableColumn("dateOfBirth") ;
-		dobColumn.setMinWidth(100);
-		dobColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("dateOfBirth"));
+		TableColumn pubYearColumn = new TableColumn("pubYear") ;
+		pubYearColumn.setMinWidth(100);
+		pubYearColumn.setCellValueFactory(
+	                new PropertyValueFactory<PatronTableModel, String>("pubYear"));
 		
 		TableColumn statusColumn = new TableColumn("status") ;
 		statusColumn.setMinWidth(100);
 		statusColumn.setCellValueFactory(
 	                new PropertyValueFactory<PatronTableModel, String>("status"));
 
-		tableOfAccounts.getColumns().addAll(patronIdColumn, 
-				nameColumn, addressColumn, cityColumn, stateCodeColumn, zipColumn, emailColumn, dobColumn, statusColumn);
+
+		tableOfAccounts.getColumns().addAll(bookIdColumn, 
+				authorColumn, titleColumn, pubYearColumn, statusColumn);
 
 		tableOfAccounts.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
@@ -250,11 +230,11 @@ public class PatronCollectionView extends View
 	//--------------------------------------------------------------------------
 	protected void processAccountSelected()
 	{
-		PatronTableModel selectedItem = tableOfAccounts.getSelectionModel().getSelectedItem();
+		BookTableModel selectedItem = tableOfAccounts.getSelectionModel().getSelectedItem();
 		
 		if(selectedItem != null)
 		{
-			String selectedAcctNumber = selectedItem.getPatronId();
+			String selectedAcctNumber = selectedItem.getbookId();
 
 			myModel.stateChangeRequest("AccountSelected", selectedAcctNumber);
 		}

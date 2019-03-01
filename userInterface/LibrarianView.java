@@ -140,6 +140,8 @@ public class LibrarianView extends View {
 		else if(e.getSource()==searchPatronBTN) {
 			myModel.stateChangeRequest("searchPatron", null);
 		}
+		else if(e.getSource()==searchBooksBTN)
+			myModel.stateChangeRequest("titleSearch", null);
 		else
 			System.out.println(e);
 	}

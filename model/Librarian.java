@@ -91,10 +91,14 @@ public class Librarian implements IView, IModel
 	{
 		if(key=="searchPatron") 
 			createAndShowPatronSearch();
+		else if(key=="titleSearch")
+			createAndShowTitleSearch();
 		else if(key=="LibrarianView")
 			createAndShowLibrarianView();
 		else if(key=="zip")
 			createAndShowPatronCollection();
+		else if(key=="title")
+			createAndShowBookCollection();
 		else
 			System.out.println("No screen for key.");
 	}
@@ -188,6 +192,23 @@ public class Librarian implements IView, IModel
 		
 	}
 	
+	private void createAndShowTitleSearch() {
+		Scene currentScene = (Scene)myViews.get("titleSearch");
+		
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("titleSearch", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("titleSearch", currentScene);
+		}
+				
+
+		// make the view visible by installing it into the frame
+		swapToView(currentScene);
+		
+	}
+	
 	private void createAndShowPatronCollection() {
 		Scene currentScene = (Scene)myViews.get("patronCollection");
 		
@@ -197,6 +218,23 @@ public class Librarian implements IView, IModel
 			View newView = ViewFactory.createView("patronCollection", this); // USE VIEW FACTORY
 			currentScene = new Scene(newView);
 			myViews.put("patronCollection", currentScene);
+		}
+				
+
+		// make the view visible by installing it into the frame
+		swapToView(currentScene);
+		
+	}
+	
+	private void createAndShowBookCollection() {
+		Scene currentScene = (Scene)myViews.get("title");
+		
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("title", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("title", currentScene);
 		}
 				
 

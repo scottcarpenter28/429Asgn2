@@ -19,15 +19,15 @@ public class ViewFactory {
 		{
 			return new PatronCollectionView(model);
 		}
-		/*else if(viewName.equals("AccountView") == true)
+		else if(viewName.equals("titleSearch") == true)
 		{
-			return new AccountView(model);
+			return new SearchBook(model);
 		}
-		else if(viewName.equals("AccountHolderIDEntryView") == true)
+		else if(viewName.equals("title") == true)
 		{
-			return new AccountHolderIDEntryView(model);
+			return new BookCollectionView(model);
 		}
-		else if(viewName.equals("DepositTransactionView") == true)
+		/*else if(viewName.equals("DepositTransactionView") == true)
 		{
 			return new DepositTransactionView(model);
 		}

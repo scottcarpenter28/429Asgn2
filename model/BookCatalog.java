@@ -122,4 +122,9 @@ public class BookCatalog  extends EntityBase implements IView
 			mySchema = getSchemaInfo(tableName);
 		}
 	}
+
+	public Vector<String> getEntryListView() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
