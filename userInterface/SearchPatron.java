@@ -122,10 +122,7 @@ public class SearchPatron extends View {
 	}
 
 	private void proccessZip(String zipCode) {
-		
-		Properties props=new Properties();
-		props.setProperty("zip", zipCode);
-		myModel.stateChangeRequest("zip", props);
+		myModel.stateChangeRequest("zip", zipCode);
 	}
 
 	@Override

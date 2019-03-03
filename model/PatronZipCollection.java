@@ -13,6 +13,8 @@ import database.*;
 
 import impresario.IView;
 import userInterface.PatronCollectionView;
+import userInterface.View;
+import userInterface.ViewFactory;
 
 //==============================================================
 public class PatronZipCollection  extends EntityBase implements IView
@@ -20,7 +22,7 @@ public class PatronZipCollection  extends EntityBase implements IView
 	private static final String myTableName = "patron";
 
 	protected Properties dependencies;
-	private Vector patrons;
+	private Vector<Patron> patrons;
 	// GUI Components
 
 	// constructor for this class
@@ -30,44 +32,82 @@ public class PatronZipCollection  extends EntityBase implements IView
 	{
 		super(myTableName);
 
-		setDependencies();
-		String query = "SELECT * FROM " + myTableName + " WHERE (AccountNumber = " + zip + ")";
+		if (zip == null)
+		{
+			new Event(Event.getLeafLevelClassName(this), "<init>",
+				"Missing account holder information", Event.FATAL);
+			throw new Exception
+				("UNEXPECTED ERROR: AccountCollection.<init>: account holder information is null");
+		}
 
-		Vector<Properties> allDataRetrieved = getSelectQueryResult(query);
 
-		// You must get one account at least
+		String query = "SELECT * FROM " + myTableName + " WHERE (zip = " + zip + ")";
+
+		Vector allDataRetrieved = getSelectQueryResult(query);
+
 		if (allDataRetrieved != null)
 		{
-			int size = allDataRetrieved.size();
+			patrons = new Vector<Patron>();
 
-			// There should be EXACTLY one account. More than that is an error
-			if (size == 0)
+			for (int cnt = 0; cnt < allDataRetrieved.size(); cnt++)
 			{
-				throw new InvalidPrimaryKeyException("No patrons matching zip : "
-					+ zip + " found.");
-			}
-			else
-			{
-				// copy all the retrieved data into persistent state
-				Properties retrievedAccountData = allDataRetrieved.elementAt(0);
-				persistentState = new Properties();
+				Properties nextAccountData = (Properties)allDataRetrieved.elementAt(cnt);
 
-				Enumeration allKeys = retrievedAccountData.propertyNames();
-				while (allKeys.hasMoreElements() == true)
+				Patron account = new Patron(nextAccountData);
+
+				if (account != null)
 				{
-					String nextKey = (String)allKeys.nextElement();
-					String nextValue = retrievedAccountData.getProperty(nextKey);
-					// accountNumber = Integer.parseInt(retrievedAccountData.getProperty("accountNumber"));
-
-					if (nextValue != null)
-					{
-						persistentState.setProperty(nextKey, nextValue);
-					}
+					addAccount(account);
 				}
-
 			}
+
+		}
+		else
+		{
+			throw new InvalidPrimaryKeyException("No patrons in zip : "
+				+ zip + ". Name : ");
 		}
 	}
+
+
+		private void addAccount(Patron p) {
+		// TODO Auto-generated method stub
+			int index = findIndexToAdd(p);
+			patrons.insertElementAt(p,index);
+	}
+
+
+		private int findIndexToAdd(Patron p) {
+			//users.add(u);
+			int low=0;
+			int high = patrons.size()-1;
+			int middle;
+
+			while (low <=high)
+			{
+				middle = (low+high)/2;
+
+				Patron midSession = patrons.elementAt(middle);
+
+				int result = Patron.compare(p,midSession);
+
+				if (result ==0)
+				{
+					return middle;
+				}
+				else if (result<0)
+				{
+					high=middle-1;
+				}
+				else
+				{
+					low=middle+1;
+				}
+
+
+			}
+			return low;
+		}
 
 
 		private void setDependencies() {
@@ -83,9 +123,10 @@ public class PatronZipCollection  extends EntityBase implements IView
 		//----------------------------------------------------------
 		public Object getState(String key)
 		{
-			System.out.println("Geting state");
-			if (key.equals("Patrons"))
+			if (key.equals("PatronList"))
 				return patrons;
+			else if(key.equals("Patrons"))
+				return this;
 			return null;
 		}
 

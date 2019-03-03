@@ -38,6 +38,7 @@ import java.util.Enumeration;
 // project imports
 import impresario.IModel;
 import model.PatronZipCollection;
+import model.Patron;
 
 //==============================================================================
 public class PatronCollectionView extends View
@@ -90,7 +91,7 @@ public class PatronCollectionView extends View
 
 			while (entries.hasMoreElements() == true)
 			{
-				PatronZipCollection nextAccount = (PatronZipCollection)entries.nextElement();
+				Patron nextAccount = (Patron)entries.nextElement();
 				Vector<String> view = nextAccount.getEntryListView();
 
 				// add this list entry to the list
