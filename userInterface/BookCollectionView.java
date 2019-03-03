@@ -37,6 +37,7 @@ import java.util.Enumeration;
 
 // project imports
 import impresario.IModel;
+import model.Book;
 import model.BookCatalog;
 
 //==============================================================================
@@ -83,15 +84,15 @@ public class BookCollectionView extends View
 		ObservableList<BookTableModel> tableData = FXCollections.observableArrayList();
 		try
 		{
-			BookCatalog PatronZipCollection = (BookCatalog)myModel.getState("BookList");
+			BookCatalog bookCollection = (BookCatalog)myModel.getState("BookList");
 
-	 		Vector entryList = (Vector)PatronZipCollection.getState("Books");
+	 		Vector entryList = (Vector)bookCollection.getState("Books");
 			Enumeration entries = entryList.elements();
 
 			while (entries.hasMoreElements() == true)
 			{
-				BookCatalog nextAccount = (BookCatalog)entries.nextElement();
-				Vector<String> view = nextAccount.getEntryListView();
+				Book nextBook = (Book)entries.nextElement();
+				Vector<String> view = nextBook.getEntryListView();
 
 				// add this list entry to the list
 				BookTableModel nextTableRowData = new BookTableModel(view);

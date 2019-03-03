@@ -122,10 +122,7 @@ public class SearchBook extends View {
 	}
 
 	private void proccesstitle(String titleCode) {
-		
-		Properties props=new Properties();
-		props.setProperty("title", titleCode);
-		myModel.stateChangeRequest("title", props);
+		myModel.stateChangeRequest("title", titleCode);
 	}
 
 	@Override

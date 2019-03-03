@@ -12,13 +12,14 @@ import event.Event;
 import database.*;
 
 import impresario.IView;
+import userInterface.ViewFactory;
 
 //==============================================================
 public class BookCatalog  extends EntityBase implements IView
 {
 	private static final String myTableName = "Books";
 
-	private Vector books;
+	private Vector<Book> books;
 	// GUI Components
 
 	// constructor for this class
@@ -40,52 +41,78 @@ public class BookCatalog  extends EntityBase implements IView
 		if (title == null)
 		{
 			new Event(Event.getLeafLevelClassName(this), "<init>",
-				"Missing account holder information", Event.FATAL);
+				"Missing title information", Event.FATAL);
 			throw new Exception
-				("UNEXPECTED ERROR: BookCatalog.<init>: account holder information is null");
+				("UNEXPECTED ERROR: AccountCollection.<init>: account holder information is null");
 		}
 
-		String query = "SELECT * FROM Books WHERE title like '%"+title+"%'";
+
+		String query = "SELECT * FROM " + myTableName + " WHERE (title like'%" + title + "%')";
 
 		Vector allDataRetrieved = getSelectQueryResult(query);
-		
-		String result="";
+
 		if (allDataRetrieved != null)
 		{
-			books = new Vector();
+			books = new Vector<Book>();
 
-			result = ("==============================================\n");
+			for (int cnt = 0; cnt < allDataRetrieved.size(); cnt++)
+			{
+				Properties nextAccountData = (Properties)allDataRetrieved.elementAt(cnt);
 
-			Properties p1 = (Properties) allDataRetrieved.firstElement();
+				Book book = new Book(nextAccountData);
 
-			Enumeration props1 = p1.propertyNames();
-
-			while (props1.hasMoreElements())
-
-				result += (props1.nextElement() + "\t");
-
-			result += "\n";
-
-			result += ("----------------------------------------------\n");
-			Vector<Properties> data= allDataRetrieved;
-			for (Properties p : data) {
-
-				Enumeration props = p.propertyNames();
-
-				while (props.hasMoreElements())
-
-					result += (p.getProperty((String) (props.nextElement())) + "\t");
-
-				result += "\n";
-
+				if (book != null)
+				{
+					addBook(book);
+				}
 			}
-
-			result += ("==============================================");
 
 		}
 		else
-			System.out.println("No books found for "+title);
-		System.out.println(result);
+		{
+			throw new InvalidPrimaryKeyException("No books for : "
+				+ title + ".  : " );
+		}
+	}
+	
+	private void addBook(Book b)
+	{
+		//accounts.add(a);
+		int index = findIndexToAdd(b);
+		books.insertElementAt(b,index); // To build up a collection sorted on some key
+	}
+	
+	private int findIndexToAdd(Book a)
+	{
+		//users.add(u);
+		int low=0;
+		int high = books.size()-1;
+		int middle;
+
+		while (low <=high)
+		{
+			middle = (low+high)/2;
+
+			Book midSession = books.elementAt(middle);
+
+			int result = Book.compare(a,midSession);
+
+			if (result ==0)
+			{
+				return middle;
+			}
+			else if (result<0)
+			{
+				high=middle-1;
+			}
+			else
+			{
+				low=middle+1;
+			}
+
+
+		}
+		return low;
 	}
 
 	/**
@@ -94,8 +121,10 @@ public class BookCatalog  extends EntityBase implements IView
 	//----------------------------------------------------------
 	public Object getState(String key)
 	{
-		if (key.equals("Title"))
+		if (key.equals("BookList"))
 			return books;
+		else if(key.equals("Books"))
+			return this;
 		return null;
 	}
 
