@@ -97,11 +97,11 @@ public class Librarian implements IView, IModel
 			createAndShowLibrarianView();
 		else if(key=="zip") {
 			createAndShowPatronCollection();
-			doZipQuery((String)value);
+			searchPatrons((String)value);
 		}
 		else if(key=="title") {
 			createAndShowBookCollection();
-			doTitleQuery((String)value);
+			searchBooks((String)value);
 		}
 		else
 			System.out.println("No screen for key.");
@@ -109,9 +109,9 @@ public class Librarian implements IView, IModel
 
 
 
-	private void doZipQuery(String zip) {
+	private void searchPatrons(String zip) {
 		try {
-			new BookCatalog(zip);
+			new PatronZipCollection(zip);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,7 +119,7 @@ public class Librarian implements IView, IModel
 	}
 
 
-	private void doTitleQuery(String title) {
+	private void searchBooks(String title) {
 		// TODO Auto-generated method stub
 		try {
 			new BookCatalog(title);

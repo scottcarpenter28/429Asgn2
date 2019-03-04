@@ -218,11 +218,15 @@ public class Patron extends EntityBase implements IView
 	{
 		Vector<String> v = new Vector<String>();
 
-		v.addElement(persistentState.getProperty("AccountNumber"));
-		v.addElement(persistentState.getProperty("Type"));
-		v.addElement(persistentState.getProperty("Balance"));
-		v.addElement(persistentState.getProperty("ServiceCharge"));
-
+		v.addElement(persistentState.getProperty("PatronId"));
+		v.addElement(persistentState.getProperty("name"));
+		v.addElement(persistentState.getProperty("address"));
+		v.addElement(persistentState.getProperty("city"));
+		v.addElement(persistentState.getProperty("statecode"));
+		v.addElement(persistentState.getProperty("zip"));
+		v.addElement(persistentState.getProperty("email"));
+		v.addElement(persistentState.getProperty("dateOfBirth"));
+		v.addElement(persistentState.getProperty("status"));
 		return v;
 	}
 

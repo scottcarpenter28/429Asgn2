@@ -30,6 +30,7 @@ public class SearchPatron extends View {
 	private Button submitBTN;
 	private Button cancelBTN;
 	private TextField zip;
+	private Text statusLog;
 
 	public SearchPatron(IModel model) {
 		super(model, "SearchPatron");
@@ -103,6 +104,9 @@ public class SearchPatron extends View {
   	});
     	grid.add(submitBTN, 1, 1);
     	
+    	statusLog=new Text("");
+    	grid.add(statusLog, 0, 3);
+    	
 		return grid;
 	}
 
@@ -111,8 +115,10 @@ public class SearchPatron extends View {
 		if(e.getSource()==cancelBTN)
 			myModel.stateChangeRequest("LibrarianView", null);
 		else{
-			if(zip==null || zip.getLength()!=5)
-				System.out.print("Empty zip code");
+			if(zip==null || zip.getLength()!=5){
+				statusLog.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+				statusLog.setText("Zip code must be 5 digits.");
+			}
 			else {
 				String zipCode=zip.getText();
 				proccessZip(zipCode);

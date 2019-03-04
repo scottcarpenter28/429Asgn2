@@ -44,8 +44,7 @@ import model.Patron;
 public class PatronCollectionView extends View
 {
 	protected TableView<PatronTableModel> tableOfAccounts;
-	protected Button cancelButton;
-	protected Button submitButton;
+	protected Button done;
 
 	protected MessageView statusLog;
 
@@ -207,17 +206,8 @@ public class PatronCollectionView extends View
 		scrollPane.setPrefSize(115, 150);
 		scrollPane.setContent(tableOfAccounts);
 
-		submitButton = new Button("Submit");
- 		submitButton.setOnAction(new EventHandler<ActionEvent>() {
-
-       		     @Override
-       		  public void handle(ActionEvent e) {
-       		     	processAction(e);    
-            	     }
-        	});
-
-		cancelButton = new Button("Back");
- 		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
+		done = new Button("Done");
+ 		done.setOnAction(new EventHandler<ActionEvent>() {
 
  			  public void handle(ActionEvent e) {
  	  		     	processAction(e);    
@@ -226,8 +216,7 @@ public class PatronCollectionView extends View
 
 		HBox btnContainer = new HBox(100);
 		btnContainer.setAlignment(Pos.CENTER);
-		btnContainer.getChildren().add(submitButton);
-		btnContainer.getChildren().add(cancelButton);
+		btnContainer.getChildren().add(done);
 		
 		vbox.getChildren().add(grid);
 		vbox.getChildren().add(scrollPane);

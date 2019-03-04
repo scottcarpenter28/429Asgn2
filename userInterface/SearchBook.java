@@ -24,12 +24,14 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import userInterface.MessageView;
 
 public class SearchBook extends View {
 	
 	private Button submitBTN;
 	private Button cancelBTN;
 	private TextField title;
+	private Text statusLog;
 
 	public SearchBook(IModel model) {
 		super(model, "SearchPatron");
@@ -103,6 +105,9 @@ public class SearchBook extends View {
   	});
     	grid.add(submitBTN, 1, 1);
     	
+    	statusLog= new Text("");
+    	grid.add(statusLog, 0, 3);
+    	
 		return grid;
 	}
 
@@ -111,8 +116,10 @@ public class SearchBook extends View {
 		if(e.getSource()==cancelBTN)
 			myModel.stateChangeRequest("LibrarianView", null);
 		else{
-			if(title==null)
-				System.out.print("Empty title");
+			if(title.getText().length()==0) {
+				statusLog.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+				statusLog.setText("No title entered.");
+			}
 			else {
 				String titleCode=title.getText();
 				proccesstitle(titleCode);
