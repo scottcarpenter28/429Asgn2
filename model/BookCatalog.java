@@ -1,20 +1,24 @@
 // specify the package
 package model;
 
+import java.util.Hashtable;
 //system imports
 import java.util.Properties;
 import java.util.Vector;
 import javafx.scene.Scene;
-
+import javafx.stage.Stage;
 //project imports
 import exception.InvalidPrimaryKeyException;
 import event.Event;
 import database.*;
 
 import impresario.IView;
-
+import impresario.ModelRegistry;
 import userInterface.View;
 import userInterface.ViewFactory;
+import userInterface.WindowPosition;
+import userInterface.MainStageContainer;
+
 
 //==============================================================
 public class BookCatalog  extends EntityBase implements IView
@@ -22,8 +26,15 @@ public class BookCatalog  extends EntityBase implements IView
 	private static final String myTableName = "Books";
 
 	private Vector<Book> books;
+	
+	// For Impresario
+	private Properties dependencies;
+	private ModelRegistry myRegistry;
+	
 	// GUI Components
-
+		private Hashtable<String, Scene> myViews=new Hashtable<String, Scene>();
+		private Stage	  	myStage=MainStageContainer.getInstance();
+	
 	// constructor for this class
 	//----------------------------------------------------------
 	
@@ -78,7 +89,6 @@ public class BookCatalog  extends EntityBase implements IView
 			throw new InvalidPrimaryKeyException("No books for : "
 				+ title + ".  : " );
 		}
-		//createAndShowView();
 	}
 	
 	private void addBook(Book b)
@@ -179,17 +189,36 @@ public class BookCatalog  extends EntityBase implements IView
 	
 	
 	protected void createAndShowView(){
-		Scene currentScene = (Scene)myViews.get("title");
+		Scene localScene = myViews.get("title");
 
-		if (currentScene == null)
+		if (localScene == null)
 		{
 			// create our initial view
 			View newView = ViewFactory.createView("title", this); // USE VIEW FACTORY
-			currentScene = new Scene(newView);
-			myViews.put("title", currentScene);
+			localScene = new Scene(newView);
+			myViews.put("title", localScene);
 		}	
-		swapToView(currentScene);
+		swapToView(localScene);
 		
+	}
+	
+	public void swapToView(Scene newScene)
+	{		
+		if (newScene == null)
+		{
+			System.out.println("Librarian.swapToView(): Missing view for display");
+			new Event(Event.getLeafLevelClassName(this), "swapToView",
+				"Missing view for display ", Event.ERROR);
+			return;
+		}
+
+		myStage.setScene(newScene);
+		myStage.sizeToScene();
+		
+			
+		//Place in center
+		WindowPosition.placeCenter(myStage);
+
 	}
 	
 }

@@ -4,7 +4,6 @@ package model;
 // system imports
 import java.util.Hashtable;
 import java.util.Properties;
-import java.util.Scanner;
 
 import javafx.stage.Stage;
 import userInterface.MainStageContainer;
@@ -19,8 +18,6 @@ import impresario.ISlideShow;
 import impresario.IView;
 import impresario.ModelRegistry;
 
-import exception.InvalidPrimaryKeyException;
-import exception.PasswordMismatchException;
 import event.Event;
 
 /** The class containing the Teller  for the Librarian application */
@@ -121,7 +118,7 @@ public class Librarian implements IView, IModel
 		}
 	}
 
-
+	//Search for books
 	private void searchBooks(String title) {
 		// TODO Auto-generated method stub
 		try {
@@ -263,7 +260,6 @@ public class Librarian implements IView, IModel
 		}
 		swapToView(currentScene);
 	}
-	
 //-----------------------------------------------------------------------------
 
 }

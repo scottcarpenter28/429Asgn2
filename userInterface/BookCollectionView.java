@@ -12,14 +12,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -30,7 +26,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
 
 import java.util.Vector;
 import java.util.Enumeration;
@@ -84,13 +79,13 @@ public class BookCollectionView extends View
 		try
 		{
 			BookCatalog bookCollection =(BookCatalog)myModel.getState("BookList");
-
-	 		Vector entryList = (Vector)bookCollection.getState("Books");
+			System.out.println("Test");
+	 		Vector<String> entryList = (Vector)bookCollection.getState("Books");
 			Enumeration entries = entryList.elements();
-
 			while (entries.hasMoreElements() == true)
 			{
 				Book nextBook = (Book)entries.nextElement();
+				System.out.println(nextBook);
 				Vector<String> view = nextBook.getEntryListView();
 
 				// add this list entry to the list
