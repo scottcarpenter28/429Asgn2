@@ -86,8 +86,8 @@ public class Book extends EntityBase implements IView
 	//-----------------------------------------------------------------------------------
 	public static int compare(Book a, Book b)
 	{
-		String aNum = (String)a.getState("AccountNumber");
-		String bNum = (String)b.getState("AccountNumber");
+		String aNum = (String)a.getState("title");
+		String bNum = (String)b.getState("title");
 
 		return aNum.compareTo(bNum);
 	}

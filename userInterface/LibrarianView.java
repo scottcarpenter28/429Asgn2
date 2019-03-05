@@ -142,6 +142,10 @@ public class LibrarianView extends View {
 		}
 		else if(e.getSource()==searchBooksBTN)
 			myModel.stateChangeRequest("titleSearch", null);
+		else if(e.getSource()==insertNewBookBTN)
+			myModel.stateChangeRequest("enterBookView", null);
+		else if(e.getSource()==insertNewPatronBTN)
+			myModel.stateChangeRequest("enterPatronView", null);
 		else
 			System.out.println(e);
 	}

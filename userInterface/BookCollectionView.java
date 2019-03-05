@@ -43,7 +43,7 @@ import model.BookCatalog;
 //==============================================================================
 public class BookCollectionView extends View
 {
-	protected TableView<BookTableModel> tableOfAccounts;
+	protected TableView<BookTableModel> tableOfBooks;
 	protected Button done;
 
 	protected MessageView statusLog;
@@ -83,7 +83,7 @@ public class BookCollectionView extends View
 		ObservableList<BookTableModel> tableData = FXCollections.observableArrayList();
 		try
 		{
-			BookCatalog bookCollection = (BookCatalog)myModel.getState("BookList");
+			BookCatalog bookCollection =(BookCatalog)myModel.getState("BookList");
 
 	 		Vector entryList = (Vector)bookCollection.getState("Books");
 			Enumeration entries = entryList.elements();
@@ -99,7 +99,7 @@ public class BookCollectionView extends View
 				
 			}
 			
-			tableOfAccounts.setItems(tableData);
+			tableOfBooks.setItems(tableData);
 		}
 		catch (Exception e) {//SQLException e) {
 			// Need to handle this exception
@@ -141,8 +141,8 @@ public class BookCollectionView extends View
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
 
-		tableOfAccounts = new TableView<BookTableModel>();
-		tableOfAccounts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		tableOfBooks = new TableView<BookTableModel>();
+		tableOfBooks.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	
 		TableColumn bookIdColumn = new TableColumn("bookId") ;
 		bookIdColumn.setMinWidth(100);
@@ -170,10 +170,10 @@ public class BookCollectionView extends View
 	                new PropertyValueFactory<PatronTableModel, String>("status"));
 
 
-		tableOfAccounts.getColumns().addAll(bookIdColumn, 
+		tableOfBooks.getColumns().addAll(bookIdColumn, 
 				authorColumn, titleColumn, pubYearColumn, statusColumn);
 
-		tableOfAccounts.setOnMousePressed(new EventHandler<MouseEvent>() {
+		tableOfBooks.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event)
 			{
@@ -184,7 +184,7 @@ public class BookCollectionView extends View
 		});
 		ScrollPane scrollPane = new ScrollPane();
 		scrollPane.setPrefSize(115, 150);
-		scrollPane.setContent(tableOfAccounts);
+		scrollPane.setContent(tableOfBooks);
 
 		done = new Button("Done");
  		done.setOnAction(new EventHandler<ActionEvent>() {
@@ -220,7 +220,7 @@ public class BookCollectionView extends View
 	//--------------------------------------------------------------------------
 	protected void processAccountSelected()
 	{
-		BookTableModel selectedItem = tableOfAccounts.getSelectionModel().getSelectedItem();
+		BookTableModel selectedItem = tableOfBooks.getSelectionModel().getSelectedItem();
 		
 		if(selectedItem != null)
 		{

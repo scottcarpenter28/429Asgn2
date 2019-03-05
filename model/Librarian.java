@@ -95,13 +95,15 @@ public class Librarian implements IView, IModel
 			createAndShowTitleSearch();
 		else if(key=="LibrarianView")
 			createAndShowLibrarianView();
-		else if(key=="zip") {
-			createAndShowPatronCollection();
+		else if(key=="zip")
 			searchPatrons((String)value);
-		}
-		else if(key=="title") {
-			createAndShowBookCollection();
+		else if(key=="title") 
 			searchBooks((String)value);
+		else if(key=="enterBookView") {
+			createAndShowEnterBookView();
+		}
+		else if(key=="enterPatronView") {
+			createAndShowEnterPatronView();
 		}
 		else
 			System.out.println("No screen for key.");
@@ -111,7 +113,8 @@ public class Librarian implements IView, IModel
 
 	private void searchPatrons(String zip) {
 		try {
-			new PatronZipCollection(zip);
+			PatronZipCollection p =new PatronZipCollection(zip);
+			p.createAndShowView();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,7 +125,8 @@ public class Librarian implements IView, IModel
 	private void searchBooks(String title) {
 		// TODO Auto-generated method stub
 		try {
-			new BookCatalog(title);
+			BookCatalog b=new BookCatalog(title);
+			b.createAndShowView();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -234,38 +238,30 @@ public class Librarian implements IView, IModel
 		
 	}
 	
-	private void createAndShowPatronCollection() {
-		Scene currentScene = (Scene)myViews.get("patronCollection");
+	private void createAndShowEnterBookView() {
+		Scene currentScene = (Scene)myViews.get("enterBookView");
 		
 		if (currentScene == null)
 		{
 			// create our initial view
-			View newView = ViewFactory.createView("patronCollection", this); // USE VIEW FACTORY
+			View newView = ViewFactory.createView("enterBookView", this); // USE VIEW FACTORY
 			currentScene = new Scene(newView);
-			myViews.put("patronCollection", currentScene);
+			myViews.put("enterBookView", currentScene);
 		}
-				
-
-		// make the view visible by installing it into the frame
 		swapToView(currentScene);
-		
 	}
 	
-	private void createAndShowBookCollection() {
-		Scene currentScene = (Scene)myViews.get("title");
+	private void createAndShowEnterPatronView() {
+		Scene currentScene = (Scene)myViews.get("enterPatronView");
 		
 		if (currentScene == null)
 		{
 			// create our initial view
-			View newView = ViewFactory.createView("title", this); // USE VIEW FACTORY
+			View newView = ViewFactory.createView("enterPatronView", this); // USE VIEW FACTORY
 			currentScene = new Scene(newView);
-			myViews.put("title", currentScene);
+			myViews.put("enterPatronView", currentScene);
 		}
-				
-
-		// make the view visible by installing it into the frame
 		swapToView(currentScene);
-		
 	}
 	
 //-----------------------------------------------------------------------------

@@ -27,15 +27,15 @@ public class ViewFactory {
 		{
 			return new BookCollectionView(model);
 		}
-		/*else if(viewName.equals("DepositTransactionView") == true)
+		else if(viewName.equals("enterBookView") == true)
 		{
-			return new DepositTransactionView(model);
+			return new EnterBookView(model);
 		}
-		else if(viewName.equals("DepositAmountView") == true)
+		else if(viewName.equals("enterPatronView") == true)
 		{
-			return new DepositAmountView(model);
+			return new EnterPatronView(model);
 		}
-		else if(viewName.equals("WithdrawTransactionView") == true)
+		/*else if(viewName.equals("WithdrawTransactionView") == true)
 		{
 			return new WithdrawTransactionView(model);
 		}

@@ -1,17 +1,19 @@
 // specify the package
 package model;
 
-import java.util.Enumeration;
-// system imports
+//system imports
 import java.util.Properties;
 import java.util.Vector;
+import javafx.scene.Scene;
 
-// project imports
+//project imports
 import exception.InvalidPrimaryKeyException;
 import event.Event;
 import database.*;
 
 import impresario.IView;
+
+import userInterface.View;
 import userInterface.ViewFactory;
 
 //==============================================================
@@ -24,6 +26,8 @@ public class BookCatalog  extends EntityBase implements IView
 
 	// constructor for this class
 	//----------------------------------------------------------
+	
+	//Insert Boook
 	public BookCatalog(Properties props) throws Exception
 	{
 		super(myTableName);
@@ -33,6 +37,7 @@ public class BookCatalog  extends EntityBase implements IView
 		System.out.println("Book entered");
 	}
 	
+	//Search for book by title
 	public BookCatalog( String title) throws
 		Exception
 	{
@@ -73,6 +78,7 @@ public class BookCatalog  extends EntityBase implements IView
 			throw new InvalidPrimaryKeyException("No books for : "
 				+ title + ".  : " );
 		}
+		//createAndShowView();
 	}
 	
 	private void addBook(Book b)
@@ -115,10 +121,6 @@ public class BookCatalog  extends EntityBase implements IView
 		return low;
 	}
 
-	/**
-	 *
-	 */
-	//----------------------------------------------------------
 	public Object getState(String key)
 	{
 		if (key.equals("BookList"))
@@ -156,4 +158,38 @@ public class BookCatalog  extends EntityBase implements IView
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Book retrieve(String book)
+	{
+		Book retValue = null;
+		for (int cnt = 0; cnt < books.size(); cnt++)
+		{
+			Book nextBook = books.elementAt(cnt);
+			String nextBookNum = (String)nextBook.getState("AccountNumber");
+			if (nextBookNum.equals(book) == true)
+			{
+				retValue = nextBook;
+				return retValue; // we should say 'break;' here
+			}
+		}
+
+		return retValue;
+	}
+	
+	
+	
+	protected void createAndShowView(){
+		Scene currentScene = (Scene)myViews.get("title");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("title", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("title", currentScene);
+		}	
+		swapToView(currentScene);
+		
+	}
+	
 }

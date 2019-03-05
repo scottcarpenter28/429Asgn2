@@ -12,6 +12,7 @@ import event.Event;
 import database.*;
 
 import impresario.IView;
+import javafx.scene.Scene;
 import userInterface.PatronCollectionView;
 import userInterface.View;
 import userInterface.ViewFactory;
@@ -170,4 +171,19 @@ public class PatronZipCollection  extends EntityBase implements IView
 
 			return v;
 		}
+
+
+		protected void createAndShowView(){
+		Scene currentScene = (Scene)myViews.get("patronCollection");
+
+		if (currentScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("patronCollection", this); // USE VIEW FACTORY
+			currentScene = new Scene(newView);
+			myViews.put("patronCollection", currentScene);
+		}	
+		swapToView(currentScene);
+		
+	}
 	}
