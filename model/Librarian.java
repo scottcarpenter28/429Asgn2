@@ -111,7 +111,7 @@ public class Librarian implements IView, IModel
 	private void searchPatrons(String zip) {
 		try {
 			PatronZipCollection p =new PatronZipCollection(zip);
-			p.createAndShowView();
+			swapToView(p.createAndShowView());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,7 +123,7 @@ public class Librarian implements IView, IModel
 		// TODO Auto-generated method stub
 		try {
 			BookCatalog b=new BookCatalog(title);
-			b.createAndShowView();
+			swapToView(b.createAndShowView());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

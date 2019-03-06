@@ -2,6 +2,7 @@
 package model;
 
 import java.util.Enumeration;
+import java.util.Hashtable;
 // system imports
 import java.util.Properties;
 import java.util.Vector;
@@ -12,6 +13,7 @@ import event.Event;
 import database.*;
 
 import impresario.IView;
+import impresario.ModelRegistry;
 import javafx.scene.Scene;
 import userInterface.PatronCollectionView;
 import userInterface.View;
@@ -22,9 +24,14 @@ public class PatronZipCollection  extends EntityBase implements IView
 {
 	private static final String myTableName = "patron";
 
-	protected Properties dependencies;
 	private Vector<Patron> patrons;
-	// GUI Components
+
+	// For Impresario
+		private Properties dependencies;
+		private ModelRegistry myRegistry;
+		
+		// GUI Components
+			private Hashtable<String, Scene> myViews=new Hashtable<String, Scene>();
 
 	// constructor for this class
 	//----------------------------------------------------------
@@ -172,18 +179,17 @@ public class PatronZipCollection  extends EntityBase implements IView
 			return v;
 		}
 
+		protected Scene createAndShowView(){
+			Scene localScene = myViews.get("patronCollection");
 
-		protected void createAndShowView(){
-		Scene currentScene = (Scene)myViews.get("patronCollection");
-
-		if (currentScene == null)
-		{
-			// create our initial view
-			View newView = ViewFactory.createView("patronCollection", this); // USE VIEW FACTORY
-			currentScene = new Scene(newView);
-			myViews.put("patronCollection", currentScene);
-		}	
-		swapToView(currentScene);
-		
-	}
-	}
+			if (localScene == null)
+			{
+				// create our initial view
+				View newView = ViewFactory.createView("patronCollection", this); // USE VIEW FACTORY
+				localScene = new Scene(newView);
+				myViews.put("patronCollection", localScene);
+			}	
+			return localScene;
+			
+		}
+}

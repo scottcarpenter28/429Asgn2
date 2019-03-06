@@ -33,7 +33,6 @@ public class BookCatalog  extends EntityBase implements IView
 	
 	// GUI Components
 		private Hashtable<String, Scene> myViews=new Hashtable<String, Scene>();
-		private Stage	  	myStage=MainStageContainer.getInstance();
 	
 	// constructor for this class
 	//----------------------------------------------------------
@@ -188,7 +187,7 @@ public class BookCatalog  extends EntityBase implements IView
 	
 	
 	
-	protected void createAndShowView(){
+	protected Scene createAndShowView(){
 		Scene localScene = myViews.get("title");
 
 		if (localScene == null)
@@ -198,27 +197,8 @@ public class BookCatalog  extends EntityBase implements IView
 			localScene = new Scene(newView);
 			myViews.put("title", localScene);
 		}	
-		swapToView(localScene);
+		return localScene;
 		
-	}
-	
-	public void swapToView(Scene newScene)
-	{		
-		if (newScene == null)
-		{
-			System.out.println("Librarian.swapToView(): Missing view for display");
-			new Event(Event.getLeafLevelClassName(this), "swapToView",
-				"Missing view for display ", Event.ERROR);
-			return;
-		}
-
-		myStage.setScene(newScene);
-		myStage.sizeToScene();
-		
-			
-		//Place in center
-		WindowPosition.placeCenter(myStage);
-
 	}
 	
 }
