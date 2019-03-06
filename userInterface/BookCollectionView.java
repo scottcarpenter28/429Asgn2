@@ -79,8 +79,8 @@ public class BookCollectionView extends View
 		try
 		{
 			BookCatalog bookCollection =(BookCatalog)myModel.getState("BookList");
-			System.out.println("Test");
-	 		Vector<String> entryList = (Vector)bookCollection.getState("Books");
+
+	 		Vector entryList = (Vector)bookCollection.getState("Books");
 			Enumeration entries = entryList.elements();
 			while (entries.hasMoreElements() == true)
 			{
