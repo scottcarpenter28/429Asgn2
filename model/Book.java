@@ -21,7 +21,7 @@ import userInterface.ViewFactory;
 //==============================================================
 public class Book extends EntityBase implements IView
 {
-	private static final String myTableName = "Account";
+	private static final String myTableName = "Books";
 
 	protected Properties dependencies;
 

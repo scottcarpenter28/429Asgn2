@@ -11,7 +11,7 @@ public class BookTableModel
 	private final SimpleStringProperty author;
 	private final SimpleStringProperty title;
 	private final SimpleStringProperty pubYear;
-	private final SimpleStringProperty staus;
+	private final SimpleStringProperty status;
 
 	//----------------------------------------------------------------------------
 	public BookTableModel(Vector<String> bookData)
@@ -20,7 +20,7 @@ public class BookTableModel
 		author =  new SimpleStringProperty(bookData.elementAt(1));
 		title =  new SimpleStringProperty(bookData.elementAt(2));
 		pubYear =  new SimpleStringProperty(bookData.elementAt(3));
-		staus = new SimpleStringProperty(bookData.elementAt(4));
+		status = new SimpleStringProperty(bookData.elementAt(4));
 	}
 
 	//----------------------------------------------------------------------------
@@ -64,12 +64,12 @@ public class BookTableModel
     	pubYear.set(yr);
     }
     
-    public String getstaus() {
-        return staus.get();
+    public String getstatus() {
+        return status.get();
     }
 
     //----------------------------------------------------------------------------
-    public void setstaus(String st)
+    public void setstatus(String st)
     {
     	pubYear.set(st);
     }

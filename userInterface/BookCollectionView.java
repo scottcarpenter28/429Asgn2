@@ -12,10 +12,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -26,6 +30,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 import java.util.Vector;
 import java.util.Enumeration;
@@ -87,7 +92,7 @@ public class BookCollectionView extends View
 			{
 				Book nextBook = (Book)entries.nextElement();
 				Vector<String> view = nextBook.getEntryListView();
-
+				
 				// add this list entry to the list
 				BookTableModel nextTableRowData = new BookTableModel(view);
 				tableData.add(nextTableRowData);
@@ -133,38 +138,32 @@ public class BookCollectionView extends View
         prompt.setTextAlignment(TextAlignment.CENTER);
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
-
+        
 		tableOfBooks = new TableView<BookTableModel>();
 		tableOfBooks.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	
 		TableColumn bookIdColumn = new TableColumn("bookId") ;
 		bookIdColumn.setMinWidth(100);
-		bookIdColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("bookId"));
+		bookIdColumn.setCellValueFactory(new PropertyValueFactory<PatronTableModel, String>("bookId"));
 		
 		TableColumn authorColumn = new TableColumn("author") ;
 		authorColumn.setMinWidth(100);
-		authorColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("author"));
+		authorColumn.setCellValueFactory(new PropertyValueFactory<PatronTableModel, String>("author"));
 		  
 		TableColumn titleColumn = new TableColumn("title") ;
 		titleColumn.setMinWidth(250);
-		titleColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("title"));
+		titleColumn.setCellValueFactory(new PropertyValueFactory<PatronTableModel, String>("title"));
 		
 		TableColumn pubYearColumn = new TableColumn("pubYear") ;
 		pubYearColumn.setMinWidth(100);
-		pubYearColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("pubYear"));
+		pubYearColumn.setCellValueFactory(new PropertyValueFactory<PatronTableModel, String>("pubYear"));
 		
 		TableColumn statusColumn = new TableColumn("status") ;
 		statusColumn.setMinWidth(100);
-		statusColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("status"));
+		statusColumn.setCellValueFactory(new PropertyValueFactory<PatronTableModel, String>("status"));
 
 
-		tableOfBooks.getColumns().addAll(bookIdColumn, 
-				authorColumn, titleColumn, pubYearColumn, statusColumn);
+		tableOfBooks.getColumns().addAll(bookIdColumn, authorColumn, titleColumn, pubYearColumn, statusColumn);
 
 		tableOfBooks.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
