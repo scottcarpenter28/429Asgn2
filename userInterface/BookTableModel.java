@@ -14,13 +14,13 @@ public class BookTableModel
 	private final SimpleStringProperty staus;
 
 	//----------------------------------------------------------------------------
-	public BookTableModel(Vector<String> accountData)
+	public BookTableModel(Vector<String> bookData)
 	{
-		bookId =  new SimpleStringProperty(accountData.elementAt(0));
-		author =  new SimpleStringProperty(accountData.elementAt(1));
-		title =  new SimpleStringProperty(accountData.elementAt(2));
-		pubYear =  new SimpleStringProperty(accountData.elementAt(3));
-		staus = new SimpleStringProperty(accountData.elementAt(4));
+		bookId =  new SimpleStringProperty(bookData.elementAt(0));
+		author =  new SimpleStringProperty(bookData.elementAt(1));
+		title =  new SimpleStringProperty(bookData.elementAt(2));
+		pubYear =  new SimpleStringProperty(bookData.elementAt(3));
+		staus = new SimpleStringProperty(bookData.elementAt(4));
 	}
 
 	//----------------------------------------------------------------------------

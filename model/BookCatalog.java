@@ -132,10 +132,12 @@ public class BookCatalog  extends EntityBase implements IView
 
 	public Object getState(String key)
 	{
-		if (key.equals("BookList"))
+		if (key.equals("Books")) {
 			return books;
-		else if(key.equals("Books"))
+		}
+		else if(key.equals("BookList")) {
 			return this;
+		}
 		return null;
 	}
 

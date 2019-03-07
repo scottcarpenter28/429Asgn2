@@ -103,11 +103,11 @@ public class Book extends EntityBase implements IView
 	{
 		try
 		{
-			if (persistentState.getProperty("AccountNumber") != null)
+			if (persistentState.getProperty("bookId") != null)
 			{
 				Properties whereClause = new Properties();
-				whereClause.setProperty("AccountNumber",
-				persistentState.getProperty("AccountNumber"));
+				whereClause.setProperty("bookId",
+				persistentState.getProperty("bookId"));
 				updatePersistentState(mySchema, persistentState, whereClause);
 				updateStatusMessage = "Account data for account number : " + persistentState.getProperty("AccountNumber") + " updated successfully in database!";
 			}
@@ -115,7 +115,7 @@ public class Book extends EntityBase implements IView
 			{
 				Integer accountNumber =
 					insertAutoIncrementalPersistentState(mySchema, persistentState);
-				persistentState.setProperty("AccountNumber", "" + accountNumber.intValue());
+				persistentState.setProperty("bookId", "" + accountNumber.intValue());
 				updateStatusMessage = "Account data for new account : " +  persistentState.getProperty("AccountNumber")
 					+ "installed successfully in database!";
 			}
@@ -136,7 +136,6 @@ public class Book extends EntityBase implements IView
 	public Vector<String> getEntryListView()
 	{
 		Vector<String> v = new Vector<String>();
-
 		v.addElement(persistentState.getProperty("bookId"));
 		v.addElement(persistentState.getProperty("author"));
 		v.addElement(persistentState.getProperty("title"));

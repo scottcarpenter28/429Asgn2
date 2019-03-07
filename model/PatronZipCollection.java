@@ -131,9 +131,9 @@ public class PatronZipCollection  extends EntityBase implements IView
 		//----------------------------------------------------------
 		public Object getState(String key)
 		{
-			if (key.equals("PatronList"))
+			if (key.equals("Patron"))
 				return patrons;
-			else if(key.equals("Patrons"))
+			else if(key.equals("PatronsList"))
 				return this;
 			return null;
 		}

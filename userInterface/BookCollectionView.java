@@ -77,15 +77,16 @@ public class BookCollectionView extends View
 		
 		ObservableList<BookTableModel> tableData = FXCollections.observableArrayList();
 		try
-		{
-			BookCatalog bookCollection =(BookCatalog)myModel.getState("BookList");
-
+		{			
+			BookCatalog bookCollection = (BookCatalog)myModel.getState("BookList");
+			
 	 		Vector entryList = (Vector)bookCollection.getState("Books");
 			Enumeration entries = entryList.elements();
+
 			while (entries.hasMoreElements() == true)
 			{
 				Book nextBook = (Book)entries.nextElement();
-				System.out.println(nextBook);
+
 				Vector<String> view = nextBook.getEntryListView();
 
 				// add this list entry to the list
@@ -150,7 +151,7 @@ public class BookCollectionView extends View
 	                new PropertyValueFactory<PatronTableModel, String>("author"));
 		  
 		TableColumn titleColumn = new TableColumn("title") ;
-		titleColumn.setMinWidth(100);
+		titleColumn.setMinWidth(250);
 		titleColumn.setCellValueFactory(
 	                new PropertyValueFactory<PatronTableModel, String>("title"));
 		
