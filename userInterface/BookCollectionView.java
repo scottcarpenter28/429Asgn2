@@ -86,15 +86,12 @@ public class BookCollectionView extends View
 			while (entries.hasMoreElements() == true)
 			{
 				Book nextBook = (Book)entries.nextElement();
-
 				Vector<String> view = nextBook.getEntryListView();
 
 				// add this list entry to the list
 				BookTableModel nextTableRowData = new BookTableModel(view);
 				tableData.add(nextTableRowData);
-				
 			}
-			
 			tableOfBooks.setItems(tableData);
 		}
 		catch (Exception e) {//SQLException e) {
@@ -185,10 +182,11 @@ public class BookCollectionView extends View
 		done = new Button("Done");
  		done.setOnAction(new EventHandler<ActionEvent>() {
 
- 			  public void handle(ActionEvent e) {
- 	  		     	processAction(e);    
- 	       	     }
-        	});
+		     @Override
+		     public void handle(ActionEvent e) {
+		     	processAction(e);    
+     	     }
+ 	});
 
 		HBox btnContainer = new HBox(100);
 		btnContainer.setAlignment(Pos.CENTER);
@@ -204,7 +202,6 @@ public class BookCollectionView extends View
 	
 
 	protected void processAction(ActionEvent e) {
-		// TODO Auto-generated method stub
 		myModel.stateChangeRequest("LibrarianView", null);
 	}
 
@@ -216,14 +213,6 @@ public class BookCollectionView extends View
 	//--------------------------------------------------------------------------
 	protected void processAccountSelected()
 	{
-		BookTableModel selectedItem = tableOfBooks.getSelectionModel().getSelectedItem();
-		
-		if(selectedItem != null)
-		{
-			String selectedAcctNumber = selectedItem.getbookId();
-
-			myModel.stateChangeRequest("AccountSelected", selectedAcctNumber);
-		}
 	}
 
 	//--------------------------------------------------------------------------

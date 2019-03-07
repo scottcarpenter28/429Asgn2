@@ -6,7 +6,7 @@ import java.util.Hashtable;
 import java.util.Properties;
 import java.util.Vector;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
+
 //project imports
 import exception.InvalidPrimaryKeyException;
 import event.Event;
@@ -16,8 +16,7 @@ import impresario.IView;
 import impresario.ModelRegistry;
 import userInterface.View;
 import userInterface.ViewFactory;
-import userInterface.WindowPosition;
-import userInterface.MainStageContainer;
+
 
 
 //==============================================================
@@ -27,12 +26,7 @@ public class BookCatalog  extends EntityBase implements IView
 
 	private Vector<Book> books;
 	
-	// For Impresario
-	private Properties dependencies;
-	private ModelRegistry myRegistry;
-	
 	// GUI Components
-		private Hashtable<String, Scene> myViews=new Hashtable<String, Scene>();
 	
 	// constructor for this class
 	//----------------------------------------------------------
@@ -145,7 +139,7 @@ public class BookCatalog  extends EntityBase implements IView
 	public void stateChangeRequest(String key, Object value)
 	{
 		// Class is invariant, so this method does not change any attributes
-
+		
 		myRegistry.updateSubscribers(key, this);
 	}
 
@@ -186,21 +180,6 @@ public class BookCatalog  extends EntityBase implements IView
 
 		return retValue;
 	}
-	
-	
-	
-	protected Scene createAndShowView(){
-		Scene localScene = myViews.get("title");
 
-		if (localScene == null)
-		{
-			// create our initial view
-			View newView = ViewFactory.createView("title", this); // USE VIEW FACTORY
-			localScene = new Scene(newView);
-			myViews.put("title", localScene);
-		}	
-		return localScene;
-		
-	}
 	
 }

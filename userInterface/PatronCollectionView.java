@@ -38,6 +38,7 @@ import java.util.Enumeration;
 // project imports
 import impresario.IModel;
 import model.PatronZipCollection;
+import userInterface.PatronTableModel;
 import model.Patron;
 
 //==============================================================================
@@ -83,15 +84,15 @@ public class PatronCollectionView extends View
 		ObservableList<PatronTableModel> tableData = FXCollections.observableArrayList();
 		try
 		{
-			PatronZipCollection PatronZipCollection = (PatronZipCollection)myModel.getState("PatronList");
+			PatronZipCollection patronZipCollection = (PatronZipCollection)myModel.getState("PatronList");
 
-	 		Vector entryList = (Vector)PatronZipCollection.getState("Patrons");
+	 		Vector entryList = (Vector)patronZipCollection.getState("Patron");
 			Enumeration entries = entryList.elements();
 
 			while (entries.hasMoreElements() == true)
 			{
-				Patron nextAccount = (Patron)entries.nextElement();
-				Vector<String> view = nextAccount.getEntryListView();
+				Patron nextPatron = (Patron)entries.nextElement();
+				Vector<String> view = nextPatron.getEntryListView();
 
 				// add this list entry to the list
 				PatronTableModel nextTableRowData = new PatronTableModel(view);

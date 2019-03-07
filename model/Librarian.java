@@ -63,12 +63,12 @@ public class Librarian implements IView, IModel
 	private void setDependencies()
 	{
 		dependencies = new Properties();
-		dependencies.setProperty("Login", "LoginError");
-		dependencies.setProperty("Deposit", "TransactionError");
-		dependencies.setProperty("Withdraw", "TransactionError");
-		dependencies.setProperty("Transfer", "TransactionError");
-		dependencies.setProperty("BalanceInquiry", "TransactionError");
-		dependencies.setProperty("ImposeServiceCharge", "TransactionError");
+		dependencies.setProperty("searchPatron", "patron");
+		dependencies.setProperty("titleSearch", "title");
+		dependencies.setProperty("LibrarianView", "Librarian");
+		dependencies.setProperty("zip", "zipCode");
+		dependencies.setProperty("enterBookView", "bookTitle");
+		dependencies.setProperty("LibrarianView", "CancelbookList");
 
 		myRegistry.setDependencies(dependencies);
 	}
@@ -86,24 +86,25 @@ public class Librarian implements IView, IModel
 	//----------------------------------------------------------------
 	public void stateChangeRequest(String key, Object value)
 	{
-		if(key=="searchPatron") 
+		if(key.endsWith("searchPatron"))
 			createAndShowPatronSearch();
-		else if(key=="titleSearch")
+		else if(key.equals("titleSearch"))
 			createAndShowTitleSearch();
-		else if(key=="LibrarianView")
+		else if(key.equals("LibrarianView"))
 			createAndShowLibrarianView();
-		else if(key=="zip")
+		else if(key.equals("zip"))
 			searchPatrons((String)value);
-		else if(key=="title") 
+		else if(key.equals("title"))
 			searchBooks((String)value);
-		else if(key=="enterBookView") {
+		else if(key.equals("enterBookView")) {
 			createAndShowEnterBookView();
 		}
-		else if(key=="enterPatronView") {
+		else if(key.equals("enterPatronView")) {
 			createAndShowEnterPatronView();
 		}
 		else
 			System.out.println("No screen for key.");
+		myRegistry.updateSubscribers(key, this);
 	}
 
 
@@ -123,7 +124,7 @@ public class Librarian implements IView, IModel
 		// TODO Auto-generated method stub
 		try {
 			BookCatalog b=new BookCatalog(title);
-			swapToView(b.createAndShowView());
+			createAndShowCollectionView(b);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -260,6 +261,21 @@ public class Librarian implements IView, IModel
 		}
 		swapToView(currentScene);
 	}
+	
+	protected void createAndShowCollectionView(BookCatalog b){
+		Scene localScene = myViews.get("title");
+
+		if (localScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("title", b); // USE VIEW FACTORY
+			localScene = new Scene(newView);
+			myViews.put("title", localScene);
+		}	
+		swapToView(localScene);
+		
+	}
+	
 //-----------------------------------------------------------------------------
 
 }

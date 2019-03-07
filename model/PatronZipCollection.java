@@ -175,7 +175,7 @@ public class PatronZipCollection  extends EntityBase implements IView
 			v.addElement(persistentState.getProperty("email"));
 			v.addElement(persistentState.getProperty("dateOfBirth"));
 			v.addElement(persistentState.getProperty("status"));
-
+			System.out.print(v);
 			return v;
 		}
 
@@ -190,6 +190,5 @@ public class PatronZipCollection  extends EntityBase implements IView
 				myViews.put("patronCollection", localScene);
 			}	
 			return localScene;
-			
 		}
 }
