@@ -10,3 +10,5 @@
 /Account.class
 /Book.class
 /Patron.class
+/AccountCollection.class
+/BookCollection.class

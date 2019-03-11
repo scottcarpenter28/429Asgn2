@@ -123,7 +123,7 @@ public class Librarian implements IView, IModel
 	private void searchBooks(String title) {
 		// TODO Auto-generated method stub
 		try {
-			BookCatalog b=new BookCatalog(title);
+			BookCollection b=new BookCollection(title);
 			createAndShowCollectionView(b);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -262,7 +262,7 @@ public class Librarian implements IView, IModel
 		swapToView(currentScene);
 	}
 	
-	protected void createAndShowCollectionView(BookCatalog b){
+	protected void createAndShowCollectionView(BookCollection b){
 		Scene localScene = myViews.get("title");
 
 		if (localScene == null)

@@ -23,9 +23,9 @@ public class ViewFactory {
 		{
 			return new SearchBook(model);
 		}
-		else if(viewName.equals("title") == true)
+		else if(viewName.equals("BookCollectionView") == true)
 		{
-			return new BookCollectionView(model);
+			return new BookCollectionView2(model);
 		}
 		else if(viewName.equals("enterBookView") == true)
 		{
