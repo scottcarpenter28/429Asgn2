@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -35,7 +36,7 @@ public class EnterPatronView extends View {
 	private TextField zipTF = new TextField();
 	private TextField emailTF = new TextField();
 	private TextField dateOfBirthTF = new TextField();
-	private TextField statusTF = new TextField();
+	private ComboBox statusCB = new ComboBox();
 	
 	private Button submitBTN;
 	private Button goBackBTN = new Button("Go Back");
@@ -79,7 +80,7 @@ public class EnterPatronView extends View {
 		zipTF.setText("");
 		emailTF.setText("");
 		dateOfBirthTF.setText("");
-		statusTF.setText("Active");
+		statusCB.getItems().addAll("Active", "In Active");
 		messageLBL.setText("");
 	}
 	
@@ -115,7 +116,7 @@ public class EnterPatronView extends View {
     	grid.add(zipTF, 1, 4);
     	grid.add(emailTF, 1, 5);
     	grid.add(dateOfBirthTF, 1, 6);
-    	grid.add(statusTF, 1, 7);
+    	grid.add(statusCB, 1, 7);
     	
     	
     	submitBTN = new Button("Submit");
@@ -154,7 +155,7 @@ public class EnterPatronView extends View {
 		}
 		
 		if(nameTF.getText().isEmpty() || addressTF.getText().isEmpty() || cityTF.getText().isEmpty() || stateCodeTF.getText().isEmpty()
-				|| zipTF.getText().isEmpty() || emailTF.getText().isEmpty() || statusTF.getText().isEmpty())
+				|| zipTF.getText().isEmpty() || emailTF.getText().isEmpty())
 			messageLBL.setText("Please enter info.");
 		else if(stateCodeTF.getLength() != 2)
 			messageLBL.setText("Please enter 2 digit state code.");
@@ -172,11 +173,11 @@ public class EnterPatronView extends View {
 		props.put("zip",zipTF.getText());
 		props.put("email",emailTF.getText());
 		props.put("dateOfBirth", dateOfBirthTF.getText());
-		props.put("status",statusTF.getText());
+		props.put("status",statusCB.getValue());
 		Properties schema = new Properties();
 		schema.put("TableName", "patron");
 		try {
-			new Patron(props);
+			new Patron(props).updateStateInDatabase();
 			populateFields();
 			messageLBL.setText("Patron entered");
 		} catch(Exception e) {

@@ -98,6 +98,7 @@ public class EnterBookView extends View {
     	grid.add(authorTF, 0, 1);
     	grid.add(titleTF, 1, 1);
     	grid.add(pubYearTF, 2, 1);
+    	statusCB.getItems().addAll("Avaliable", "Unavaible");
     	grid.add(statusCB, 3, 1);
     	
     	submitBTN = new Button("Submit");
@@ -134,12 +135,7 @@ public class EnterBookView extends View {
 		props.put("author", authorTF.getText());
 		props.put("title",titleTF.getText());
 		props.put("pubYear",pubYearTF.getText());
-		if(statusCB.getSelectionModel().isEmpty()) {
-			props.put("status","Unavaliable");
-		}
-		else {
-		props.put("status","Avaliable");
-		}
+		props.put("status",statusCB.getValue());
 		Properties schema = new Properties();
 		schema.put("TableName", "books");
 		try {

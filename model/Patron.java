@@ -179,15 +179,15 @@ public class Patron extends EntityBase implements IView
 	}
 	
 	//-----------------------------------------------------------------------------------
-	private void updateStateInDatabase() 
+	public void updateStateInDatabase() 
 	{
 		try
 		{
-			if (persistentState.getProperty("AccountNumber") != null)
+			if (persistentState.getProperty("patronID") != null)
 			{
 				Properties whereClause = new Properties();
-				whereClause.setProperty("AccountNumber",
-				persistentState.getProperty("AccountNumber"));
+				whereClause.setProperty("patronID",
+				persistentState.getProperty("patronID"));
 				updatePersistentState(mySchema, persistentState, whereClause);
 				updateStatusMessage = "Account data for account number : " + persistentState.getProperty("AccountNumber") + " updated successfully in database!";
 			}
@@ -195,8 +195,8 @@ public class Patron extends EntityBase implements IView
 			{
 				Integer accountNumber =
 					insertAutoIncrementalPersistentState(mySchema, persistentState);
-				persistentState.setProperty("AccountNumber", "" + accountNumber.intValue());
-				updateStatusMessage = "Account data for new account : " +  persistentState.getProperty("AccountNumber")
+				persistentState.setProperty("patronID", "" + accountNumber.intValue());
+				updateStatusMessage = "Account data for new account : " +  persistentState.getProperty("patronID")
 					+ "installed successfully in database!";
 			}
 		}
@@ -237,5 +237,7 @@ public class Patron extends EntityBase implements IView
 			mySchema = getSchemaInfo(tableName);
 		}
 	}
+
+	
 }
 
