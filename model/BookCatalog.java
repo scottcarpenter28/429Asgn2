@@ -6,7 +6,7 @@ import java.util.Hashtable;
 import java.util.Properties;
 import java.util.Vector;
 import javafx.scene.Scene;
-
+import javafx.stage.Stage;
 //project imports
 import exception.InvalidPrimaryKeyException;
 import event.Event;
@@ -14,6 +14,7 @@ import database.*;
 
 import impresario.IView;
 import impresario.ModelRegistry;
+import userInterface.MainStageContainer;
 import userInterface.View;
 import userInterface.ViewFactory;
 
@@ -26,7 +27,11 @@ public class BookCatalog  extends EntityBase implements IView
 
 	private Vector<Book> books;
 	
-	// GUI Components
+	protected Properties dependencies;
+	protected ModelRegistry myRegistry;
+
+	protected Stage myStage;
+	protected Hashtable<String, Scene> myViews;
 	
 	// constructor for this class
 	//----------------------------------------------------------
@@ -82,6 +87,15 @@ public class BookCatalog  extends EntityBase implements IView
 			throw new InvalidPrimaryKeyException("No books for : "
 				+ title + ".  : " );
 		}
+		
+	}
+	
+	protected void setDependencies()
+	{
+		dependencies = new Properties();
+		dependencies.setProperty("CancelbookList", "CancelbookList");
+
+		myRegistry.setDependencies(dependencies);
 	}
 	
 	private void addBook(Book b)
@@ -179,6 +193,23 @@ public class BookCatalog  extends EntityBase implements IView
 		}
 
 		return retValue;
+	}
+	
+	protected void createAndShowView()
+	{
+
+		Scene localScene = myViews.get("BookCollectionView");
+
+		if (localScene == null)
+		{
+				// create our new view
+				View newView = ViewFactory.createView("BookCollectionView", this);
+				localScene = new Scene(newView);
+				myViews.put("BookCollectionView", localScene);
+		}
+		// make the view visible by installing it into the frame
+		swapToView(localScene);
+		
 	}
 
 	

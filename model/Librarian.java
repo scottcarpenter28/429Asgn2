@@ -68,7 +68,7 @@ public class Librarian implements IView, IModel
 		dependencies.setProperty("LibrarianView", "Librarian");
 		dependencies.setProperty("zip", "zipCode");
 		dependencies.setProperty("enterBookView", "bookTitle");
-		dependencies.setProperty("LibrarianView", "CancelbookList");
+		dependencies.setProperty("BookCollectionView", "CancelbookList");
 
 		myRegistry.setDependencies(dependencies);
 	}
@@ -90,7 +90,7 @@ public class Librarian implements IView, IModel
 			createAndShowPatronSearch();
 		else if(key.equals("titleSearch"))
 			createAndShowTitleSearch();
-		else if(key.equals("LibrarianView"))
+		else if(key.equals("LibrarianView")||key.equals("CancelBookList"))
 			createAndShowLibrarianView();
 		else if(key.equals("zip"))
 			searchPatrons((String)value);
@@ -123,7 +123,8 @@ public class Librarian implements IView, IModel
 	private void searchBooks(String title) {
 		// TODO Auto-generated method stub
 		try {
-			BookCollection b=new BookCollection(title);
+			BookCatalog b=new BookCatalog(title);
+			//b.createAndShowView();
 			createAndShowCollectionView(b);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -262,15 +263,15 @@ public class Librarian implements IView, IModel
 		swapToView(currentScene);
 	}
 	
-	protected void createAndShowCollectionView(BookCollection b){
-		Scene localScene = myViews.get("title");
+	protected void createAndShowCollectionView(BookCatalog b){
+		Scene localScene = myViews.get("BookCollectionView");
 
 		if (localScene == null)
 		{
 			// create our initial view
-			View newView = ViewFactory.createView("title", b); // USE VIEW FACTORY
+			View newView = ViewFactory.createView("BookCollectionView", b); // USE VIEW FACTORY
 			localScene = new Scene(newView);
-			myViews.put("title", localScene);
+			myViews.put("BookCollectionView", localScene);
 		}	
 		swapToView(localScene);
 		
