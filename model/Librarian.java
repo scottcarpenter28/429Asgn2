@@ -112,12 +112,14 @@ public class Librarian implements IView, IModel
 	private void searchPatrons(String zip) {
 		try {
 			PatronZipCollection p =new PatronZipCollection(zip);
-			swapToView(p.createAndShowView());
+			createAndShowPatronView(p);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+
 
 	//Search for books
 	private void searchBooks(String title) {
@@ -275,6 +277,19 @@ public class Librarian implements IView, IModel
 		}	
 		swapToView(localScene);
 		
+	}
+	
+	private void createAndShowPatronView(PatronZipCollection p) {
+		Scene localScene = myViews.get("patronCollection");
+
+		if (localScene == null)
+		{
+			// create our initial view
+			View newView = ViewFactory.createView("patronCollection", p); // USE VIEW FACTORY
+			localScene = new Scene(newView);
+			myViews.put("patronCollection", localScene);
+		}	
+		swapToView(localScene);
 	}
 	
 //-----------------------------------------------------------------------------

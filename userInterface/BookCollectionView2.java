@@ -93,7 +93,6 @@ public class BookCollectionView2 extends View
 			{
 				Book nextBook= (Book)entries.nextElement();
 				Vector<String> view = nextBook.getEntryListView();
-
 				// add this list entry to the list
 				BookTableModel2 nextTableRowData = new BookTableModel2(view);
 				tableData.add(nextTableRowData);
@@ -145,9 +144,9 @@ public class BookCollectionView2 extends View
 		tableOfBooks = new TableView<BookTableModel2>();
 		tableOfBooks.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	
-		TableColumn bookIdColumn = new TableColumn("Book Id") ;
-		bookIdColumn.setMinWidth(100);
-		bookIdColumn.setCellValueFactory(
+		TableColumn bookIDColumn = new TableColumn("Book ID") ;
+		bookIDColumn.setMinWidth(100);
+		bookIDColumn.setCellValueFactory(
 	                new PropertyValueFactory<BookTableModel2, String>("bookId"));
 		
 		TableColumn authorColumn = new TableColumn("Author") ;
@@ -170,7 +169,7 @@ public class BookCollectionView2 extends View
 		statusColumn.setCellValueFactory(
 	                new PropertyValueFactory<BookTableModel2, String>("status"));
 
-		tableOfBooks.getColumns().addAll(bookIdColumn, 
+		tableOfBooks.getColumns().addAll(bookIDColumn, 
 				authorColumn, titleColumn, pubYearColumn, statusColumn);
 
 		tableOfBooks.setOnMousePressed(new EventHandler<MouseEvent>() {

@@ -21,7 +21,7 @@ import userInterface.ViewFactory;
 //==============================================================
 public class Patron extends EntityBase implements IView
 {
-	private static final String myTableName = "Account";
+	private static final String myTableName = "patron";
 
 	protected Properties dependencies;
 
@@ -44,7 +44,6 @@ public class Patron extends EntityBase implements IView
 		{
 			String nextKey = (String)allKeys.nextElement();
 			String nextValue = props.getProperty(nextKey);
-
 			if (nextValue != null)
 			{
 				persistentState.setProperty(nextKey, nextValue);
@@ -218,11 +217,11 @@ public class Patron extends EntityBase implements IView
 	{
 		Vector<String> v = new Vector<String>();
 
-		v.addElement(persistentState.getProperty("PatronId"));
+		v.addElement(persistentState.getProperty("patronID"));
 		v.addElement(persistentState.getProperty("name"));
 		v.addElement(persistentState.getProperty("address"));
 		v.addElement(persistentState.getProperty("city"));
-		v.addElement(persistentState.getProperty("statecode"));
+		v.addElement(persistentState.getProperty("stateCode"));
 		v.addElement(persistentState.getProperty("zip"));
 		v.addElement(persistentState.getProperty("email"));
 		v.addElement(persistentState.getProperty("dateOfBirth"));

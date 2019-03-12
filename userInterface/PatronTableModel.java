@@ -7,122 +7,122 @@ import javafx.beans.property.SimpleStringProperty;
 //==============================================================================
 public class PatronTableModel
 {
-	private final SimpleStringProperty PatronId;
-	private final SimpleStringProperty Name;
+	private final SimpleStringProperty patronID;
+	private final SimpleStringProperty name;
 	private final SimpleStringProperty address;
 	private final SimpleStringProperty city;
 	private final SimpleStringProperty stateCode;
 	private final SimpleStringProperty zip;
 	private final SimpleStringProperty email;
-	private final SimpleStringProperty dob;
+	private final SimpleStringProperty dateOfBirth;
 	private final SimpleStringProperty status;
 
 	//----------------------------------------------------------------------------
 	public PatronTableModel(Vector<String> accountData)
 	{
-		PatronId =  new SimpleStringProperty(accountData.elementAt(0));
-		Name =  new SimpleStringProperty(accountData.elementAt(1));
+		patronID =  new SimpleStringProperty(accountData.elementAt(0));
+		name =  new SimpleStringProperty(accountData.elementAt(1));
 		address =  new SimpleStringProperty(accountData.elementAt(2));
 		city =  new SimpleStringProperty(accountData.elementAt(3));
 		stateCode =  new SimpleStringProperty(accountData.elementAt(4));
 		zip =  new SimpleStringProperty(accountData.elementAt(5));
 		email =  new SimpleStringProperty(accountData.elementAt(6));
-		dob =  new SimpleStringProperty(accountData.elementAt(7));
+		dateOfBirth =  new SimpleStringProperty(accountData.elementAt(7));
 		status =  new SimpleStringProperty(accountData.elementAt(8));
 	}
 
 	//----------------------------------------------------------------------------
-	public String getPatronId() {
-        return PatronId.get();
+	public String getPatronID() {
+        return patronID.get();
     }
 
 	//----------------------------------------------------------------------------
-    public void setPatronId(String number) {
-        PatronId.set(number);
+    public void setPatronID(String number) {
+        patronID.set(number);
     }
 
     //----------------------------------------------------------------------------
     public String getName() {
-        return Name.get();
+        return name.get();
     }
 
     //----------------------------------------------------------------------------
     public void setName(String n) {
-        Name.set(n);
+        name.set(n);
     }
 
     //----------------------------------------------------------------------------
-    public String getaddress() {
+    public String getAddress() {
         return address.get();
     }
 
     //----------------------------------------------------------------------------
-    public void setaddress(String a) {
+    public void setAddress(String a) {
         address.set(a);
     }
     
     //----------------------------------------------------------------------------
-    public String getcity() {
+    public String getCity() {
         return city.get();
     }
 
     //----------------------------------------------------------------------------
-    public void setcity(String c)
+    public void setCity(String c)
     {
     	city.set(c);
     }
     
     //----------------------------------------------------------------------------
-    public String getstateCode() {
+    public String getStateCode() {
         return stateCode.get();
     }
 
     //----------------------------------------------------------------------------
-    public void setstateCode(String state)
+    public void setStateCode(String state)
     {
     	stateCode.set(state);
     }
     
     //----------------------------------------------------------------------------
-    public String getzip() {
+    public String getZip() {
         return zip.get();
     }
 
     //----------------------------------------------------------------------------
-    public void setzip(String c)
+    public void setZip(String c)
     {
     	zip.set(c);
     }
     
     //----------------------------------------------------------------------------
-    public String getemail() {
-        return city.get();
+    public String getEmail() {
+        return email.get();
     }
 
     //----------------------------------------------------------------------------
-    public void setemail(String mail)
+    public void setEmail(String mail)
     {
     	email.set(mail);
     }
     
     //----------------------------------------------------------------------------
-    public String getdob() {
-        return city.get();
+    public String getDateOfBirth() {
+        return dateOfBirth.get();
     }
 
     //----------------------------------------------------------------------------
-    public void setdob(String d)
+    public void setDateOfBirth(String d)
     {
-    	dob.set(d);
+    	dateOfBirth.set(d);
     }
     
     //----------------------------------------------------------------------------
-    public String getstatus() {
+    public String getStatus() {
         return status.get();
     }
 
     //----------------------------------------------------------------------------
-    public void setstatus(String s)
+    public void setStatus(String s)
     {
     	status.set(s);
     }

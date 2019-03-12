@@ -133,7 +133,7 @@ public class PatronZipCollection  extends EntityBase implements IView
 		{
 			if (key.equals("Patron"))
 				return patrons;
-			else if(key.equals("PatronsList"))
+			else if(key.equals("PatronList"))
 				return this;
 			return null;
 		}
@@ -175,7 +175,6 @@ public class PatronZipCollection  extends EntityBase implements IView
 			v.addElement(persistentState.getProperty("email"));
 			v.addElement(persistentState.getProperty("dateOfBirth"));
 			v.addElement(persistentState.getProperty("status"));
-			System.out.print(v);
 			return v;
 		}
 

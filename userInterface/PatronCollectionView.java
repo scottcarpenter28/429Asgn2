@@ -37,15 +37,15 @@ import java.util.Enumeration;
 
 // project imports
 import impresario.IModel;
-import model.PatronZipCollection;
-import userInterface.PatronTableModel;
 import model.Patron;
+import model.PatronZipCollection;
+import model.Librarian;
 
 //==============================================================================
 public class PatronCollectionView extends View
 {
-	protected TableView<PatronTableModel> tableOfAccounts;
-	protected Button done;
+	protected TableView<PatronTableModel> tableOfPatrons;
+	protected Button cancelButton;
 
 	protected MessageView statusLog;
 
@@ -53,7 +53,7 @@ public class PatronCollectionView extends View
 	//--------------------------------------------------------------------------
 	public PatronCollectionView(IModel wsc)
 	{
-		super(wsc, "PatronZipCollectionView");
+		super(wsc, "PatronCollectionView");
 
 		// create a container for showing the contents
 		VBox container = new VBox(10);
@@ -84,23 +84,22 @@ public class PatronCollectionView extends View
 		ObservableList<PatronTableModel> tableData = FXCollections.observableArrayList();
 		try
 		{
-			PatronZipCollection patronZipCollection = (PatronZipCollection)myModel.getState("PatronList");
+			PatronZipCollection patronCollection = (PatronZipCollection)myModel.getState("PatronList");
 
-	 		Vector entryList = (Vector)patronZipCollection.getState("Patron");
+	 		Vector entryList = (Vector)patronCollection.getState("Patron");
 			Enumeration entries = entryList.elements();
 
 			while (entries.hasMoreElements() == true)
 			{
-				Patron nextPatron = (Patron)entries.nextElement();
+				Patron nextPatron= (Patron)entries.nextElement();
 				Vector<String> view = nextPatron.getEntryListView();
-
 				// add this list entry to the list
 				PatronTableModel nextTableRowData = new PatronTableModel(view);
 				tableData.add(nextTableRowData);
 				
 			}
 			
-			tableOfAccounts.setItems(tableData);
+			tableOfPatrons.setItems(tableData);
 		}
 		catch (Exception e) {//SQLException e) {
 			// Need to handle this exception
@@ -114,7 +113,7 @@ public class PatronCollectionView extends View
 		HBox container = new HBox();
 		container.setAlignment(Pos.CENTER);	
 
-		Text titleText = new Text(" Brockport Library");
+		Text titleText = new Text(" Brockport Library ");
 		titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		titleText.setWrappingWidth(300);
 		titleText.setTextAlignment(TextAlignment.CENTER);
@@ -142,59 +141,60 @@ public class PatronCollectionView extends View
         prompt.setFill(Color.BLACK);
         grid.add(prompt, 0, 0, 2, 1);
 
-		tableOfAccounts = new TableView<PatronTableModel>();
-		tableOfAccounts.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		tableOfPatrons = new TableView<PatronTableModel>();
+		tableOfPatrons.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	
-		TableColumn patronIdColumn = new TableColumn("PatronId") ;
-		patronIdColumn.setMinWidth(100);
-		patronIdColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("patronId"));
+		TableColumn patronIDColumn = new TableColumn("Patron ID") ;
+		patronIDColumn.setMinWidth(100);
+		patronIDColumn.setCellValueFactory(
+	                new PropertyValueFactory<BookTableModel2, String>("patronID"));
 		
-		TableColumn nameColumn = new TableColumn("name") ;
+		TableColumn nameColumn = new TableColumn("Name") ;
 		nameColumn.setMinWidth(100);
 		nameColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("name"));
+	                new PropertyValueFactory<BookTableModel2, String>("name"));
 		  
-		TableColumn addressColumn = new TableColumn("address") ;
-		addressColumn.setMinWidth(100);
+		TableColumn addressColumn = new TableColumn("Address") ;
+		addressColumn.setMinWidth(200);
 		addressColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("address"));
+	                new PropertyValueFactory<BookTableModel2, String>("address"));
 		
-		TableColumn cityColumn = new TableColumn("city") ;
+		TableColumn cityColumn = new TableColumn("City") ;
 		cityColumn.setMinWidth(100);
 		cityColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("city"));
+	                new PropertyValueFactory<BookTableModel2, String>("city"));
 		
-		TableColumn stateCodeColumn = new TableColumn("stateCode") ;
+		TableColumn stateCodeColumn = new TableColumn("State") ;
 		stateCodeColumn.setMinWidth(100);
 		stateCodeColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("stateCode"));
+	                new PropertyValueFactory<BookTableModel2, String>("stateCode"));
 		
-		
-		TableColumn zipColumn = new TableColumn("zip") ;
+		TableColumn zipColumn = new TableColumn("Zip Code") ;
 		zipColumn.setMinWidth(100);
 		zipColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("zip"));
+	                new PropertyValueFactory<BookTableModel2, String>("zip"));
 		
-		TableColumn emailColumn = new TableColumn("email") ;
+		
+		TableColumn emailColumn = new TableColumn("Email") ;
 		emailColumn.setMinWidth(100);
 		emailColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("email"));
+	                new PropertyValueFactory<BookTableModel2, String>("email"));
 		
-		TableColumn dobColumn = new TableColumn("dateOfBirth") ;
-		dobColumn.setMinWidth(100);
-		dobColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("dateOfBirth"));
+		TableColumn dateOfBirthColumn = new TableColumn("DOB") ;
+		dateOfBirthColumn.setMinWidth(100);
+		dateOfBirthColumn.setCellValueFactory(
+	                new PropertyValueFactory<BookTableModel2, String>("dateOfBirth"));
 		
-		TableColumn statusColumn = new TableColumn("status") ;
+		TableColumn statusColumn = new TableColumn("Status") ;
 		statusColumn.setMinWidth(100);
 		statusColumn.setCellValueFactory(
-	                new PropertyValueFactory<PatronTableModel, String>("status"));
+	                new PropertyValueFactory<BookTableModel2, String>("status"));
 
-		tableOfAccounts.getColumns().addAll(patronIdColumn, 
-				nameColumn, addressColumn, cityColumn, stateCodeColumn, zipColumn, emailColumn, dobColumn, statusColumn);
 
-		tableOfAccounts.setOnMousePressed(new EventHandler<MouseEvent>() {
+		tableOfPatrons.getColumns().addAll(patronIDColumn, 
+				nameColumn, addressColumn, cityColumn, stateCodeColumn, zipColumn, emailColumn, dateOfBirthColumn, statusColumn);
+
+		tableOfPatrons.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event)
 			{
@@ -205,19 +205,30 @@ public class PatronCollectionView extends View
 		});
 		ScrollPane scrollPane = new ScrollPane();
 		scrollPane.setPrefSize(115, 150);
-		scrollPane.setContent(tableOfAccounts);
+		scrollPane.setContent(tableOfPatrons);
 
-		done = new Button("Done");
- 		done.setOnAction(new EventHandler<ActionEvent>() {
+		cancelButton = new Button("Back");
+ 		cancelButton.setOnAction(new EventHandler<ActionEvent>() {
 
- 			  public void handle(ActionEvent e) {
- 	  		     	processAction(e);    
- 	       	     }
+       		     @Override
+       		     public void handle(ActionEvent e) {
+					/**
+					 * Process the Cancel button.
+					 * The ultimate result of this action is that the transaction will tell the teller to
+					 * to switch to the transaction choice view. BUT THAT IS NOT THIS VIEW'S CONCERN.
+					 * It simply tells its model (controller) that the transaction was canceled, and leaves it
+					 * to the model to decide to tell the teller to do the switch back.
+			 		*/
+					//----------------------------------------------------------
+       		     	clearErrorMessage();
+       		     	new model.Librarian();
+       		     	//myModel.stateChangeRequest("CancelBookList", null); 
+            	  }
         	});
 
 		HBox btnContainer = new HBox(100);
 		btnContainer.setAlignment(Pos.CENTER);
-		btnContainer.getChildren().add(done);
+		btnContainer.getChildren().add(cancelButton);
 		
 		vbox.getChildren().add(grid);
 		vbox.getChildren().add(scrollPane);
@@ -228,11 +239,6 @@ public class PatronCollectionView extends View
 
 	
 
-	protected void processAction(ActionEvent e) {
-		// TODO Auto-generated method stub
-		myModel.stateChangeRequest("LibrarianView", null);
-	}
-
 	//--------------------------------------------------------------------------
 	public void updateState(String key, Object value)
 	{
@@ -241,14 +247,7 @@ public class PatronCollectionView extends View
 	//--------------------------------------------------------------------------
 	protected void processAccountSelected()
 	{
-		PatronTableModel selectedItem = tableOfAccounts.getSelectionModel().getSelectedItem();
 		
-		if(selectedItem != null)
-		{
-			String selectedAcctNumber = selectedItem.getPatronId();
-
-			myModel.stateChangeRequest("AccountSelected", selectedAcctNumber);
-		}
 	}
 
 	//--------------------------------------------------------------------------

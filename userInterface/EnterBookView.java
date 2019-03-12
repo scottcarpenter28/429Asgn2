@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -32,7 +33,7 @@ public class EnterBookView extends View {
 	private TextField authorTF = new TextField();
 	private TextField titleTF = new TextField();
 	private TextField pubYearTF = new TextField();
-	private TextField statusTF = new TextField();
+	private ComboBox statusCB = new ComboBox();
 	
 	private Button submitBTN;
 	private Button goBackBTN = new Button("Go Back");
@@ -68,7 +69,6 @@ public class EnterBookView extends View {
 		authorTF.setText("");
 		titleTF.setText("");
 		pubYearTF.setText("");
-		statusTF.setText("In");
 		messageLBL.setText("");
 	}
 	
@@ -98,7 +98,7 @@ public class EnterBookView extends View {
     	grid.add(authorTF, 0, 1);
     	grid.add(titleTF, 1, 1);
     	grid.add(pubYearTF, 2, 1);
-    	grid.add(statusTF, 3, 1);
+    	grid.add(statusCB, 3, 1);
     	
     	submitBTN = new Button("Submit");
     	submitBTN.setOnAction(new EventHandler<ActionEvent>() {
@@ -124,7 +124,7 @@ public class EnterBookView extends View {
 	protected void processAction(Event e) {
 		if(e.getSource() == goBackBTN)
 			myModel.stateChangeRequest("LibrarianView", null);
-		else if(authorTF.getText().isEmpty() || titleTF.getText().isEmpty() || pubYearTF.getText().isEmpty() || statusTF.getText().isEmpty())
+		else if(authorTF.getText().isEmpty() || titleTF.getText().isEmpty() || pubYearTF.getText().isEmpty())
 			messageLBL.setText("Please enter info.");
 		else
 			enterBook();
@@ -134,7 +134,12 @@ public class EnterBookView extends View {
 		props.put("author", authorTF.getText());
 		props.put("title",titleTF.getText());
 		props.put("pubYear",pubYearTF.getText());
-		props.put("status",statusTF.getText());
+		if(statusCB.getSelectionModel().isEmpty()) {
+			props.put("status","Unavaliable");
+		}
+		else {
+		props.put("status","Avaliable");
+		}
 		Properties schema = new Properties();
 		schema.put("TableName", "books");
 		try {
