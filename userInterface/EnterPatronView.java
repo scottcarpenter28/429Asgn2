@@ -153,8 +153,11 @@ public class EnterPatronView extends View {
 			messageLBL.setText("Date is not in correct format");
 			return;
 		}
-		
-		if(nameTF.getText().isEmpty() || addressTF.getText().isEmpty() || cityTF.getText().isEmpty() || stateCodeTF.getText().isEmpty()
+		int year=Integer.parseInt(dateOfBirthTF.getText().substring(0,4));
+		if((year<1917 || year>=2000)) {
+			messageLBL.setText("Please enter a year\nbetween 1917 and 2000");
+		}
+		else if(nameTF.getText().isEmpty() || addressTF.getText().isEmpty() || cityTF.getText().isEmpty() || stateCodeTF.getText().isEmpty()
 				|| zipTF.getText().isEmpty() || emailTF.getText().isEmpty())
 			messageLBL.setText("Please enter info.");
 		else if(stateCodeTF.getLength() != 2)

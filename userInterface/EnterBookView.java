@@ -93,7 +93,7 @@ public class EnterBookView extends View {
     	grid.add(titleLBL, 1, 0);
     	grid.add(pubYearLBL, 2, 0);
     	grid.add(statusLBL, 3, 0);
-    	grid.add(messageLBL, 0, 2);
+    	grid.add(messageLBL, 0, 4);
     	
     	grid.add(authorTF, 0, 1);
     	grid.add(titleTF, 1, 1);
@@ -127,8 +127,13 @@ public class EnterBookView extends View {
 			myModel.stateChangeRequest("LibrarianView", null);
 		else if(authorTF.getText().isEmpty() || titleTF.getText().isEmpty() || pubYearTF.getText().isEmpty())
 			messageLBL.setText("Please enter info.");
-		else
-			enterBook();
+		else {
+			int year=Integer.parseInt(pubYearTF.getText());
+			if(year<1800 || year>2018)
+				messageLBL.setText("Please make sure the year is\n between 1800 and 2018");
+			else
+				enterBook();
+		}
 	}
 	private void enterBook(){
 		Properties props = new Properties();

@@ -42,8 +42,6 @@ public class BookCatalog  extends EntityBase implements IView
 		super(myTableName);
 		Properties schema = getSchemaInfo(myTableName);
 		insertAutoIncrementalPersistentState(schema, props);
-		
-		System.out.println("Book entered");
 	}
 	
 	//Search for book by title
